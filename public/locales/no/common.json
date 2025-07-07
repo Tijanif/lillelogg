@@ -1,1 +1,16 @@
-{ "appTitle": "Lillelogg", "login": "Logg Inn", "signup": "Registrer deg" }
+{
+  "appTitle": "Lillelogg",
+  "landingPage": {
+    "heroHeadline": "Registrer babyens første øyeblikk, enkelt.",
+    "heroSubHeadline": "Fang opp dyrebare øyeblikk og milepæler med enkelhet. Lillelogg gjør det enkelt å følge med på babyens utvikling.",
+    "getStartedButton": "Kom i gang"
+  },
+  "buttons": {
+    "login": "Logg Inn",
+    "signup": "Registrer deg"
+  },
+  "inputs": {
+    "emailPlaceholder": "din@epost.no",
+    "passwordPlaceholder": "********"
+  }
+}

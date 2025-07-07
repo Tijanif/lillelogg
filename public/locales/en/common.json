@@ -1,1 +1,16 @@
-{ "appTitle": "Lillelogg", "login": "Login", "signup": "Sign Up" }
+{
+  "appTitle": "Lillelogg",
+  "landingPage": {
+    "heroHeadline": "Track your baby's firsts, effortlessly.",
+    "heroSubHeadline": "Capture precious moments and milestones with simplicity. Lillelogg makes it easy to stay on top of your baby's growth.",
+    "getStartedButton": "Get Started"
+  },
+  "buttons": {
+    "login": "Login",
+    "signup": "Sign Up"
+  },
+  "inputs": {
+    "emailPlaceholder": "your@email.com",
+    "passwordPlaceholder": "********"
+  }
+}
