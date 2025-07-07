@@ -18,7 +18,7 @@
 /out/
 
 # idea
-.idea
+.idea/
 
 # prd
 lillelogg_prd.md
