@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import {designTokens} from "./src/config/design-tokens";
 
 const config: Config = {
     content: [
@@ -9,7 +10,14 @@ const config: Config = {
     ],
     theme: {
         extend: {
+            colors: designTokens.colors,
+            fontFamily: designTokens.typography.fontFamily,
+            fontSize: designTokens.typography.fontSize,
+            borderRadius: designTokens.borderRadius,
+            spacing: designTokens.spacing,
         },
     },
     plugins: [],
 }
+
+export default config;
