@@ -17,6 +17,13 @@
 /.next/
 /out/
 
+# idea
+.idea
+
+# prd
+lillelogg_prd.md
+
+
 # production
 /build
 
