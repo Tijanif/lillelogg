@@ -1,5 +1,59 @@
-@import "tailwindcss";
 
+@import "tailwindcss"; /* Import Tailwind directives first */
 
 body {
+    @apply bg-light-background text-dark-text; /* Applying colors from our @theme definition */
+}
+
+@theme {
+    /* Colors */
+    --color-light-background: #FFFFFF;
+    --color-card-background: #F2F6FA;
+    --color-primary-blue: #4D85FF;
+    --color-primary-blue-light: #8DAEFF;
+    --color-secondary-pink: #FFDDE2;
+    --color-secondary-yellow: #FFECB3;
+    --color-secondary-green: #C8E6C9;
+    --color-dark-text: #333333;
+    --color-muted-text: #6B7280;
+    --color-border-light: #E5E7EB;
+    --color-success: #4CAF50;
+    --color-warning: #FFC107;
+    --color-error: #F44336;
+
+    /* Typography - using Tailwind's standard prefixes for utilities to work directly */
+    --font-family-sans: 'Inter', sans-serif;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    --font-size-5xl: 3rem;
+
+    /* Border Radius */
+    --border-radius-none: 0px;
+    --border-radius-sm: 0.125rem;
+    --border-radius-md: 0.375rem;
+    --border-radius-lg: 0.5rem;
+    --border-radius-xl: 0.75rem;
+    --border-radius-2xl: 1rem; /* Added from designTokens.ts */
+    --border-radius-3xl: 1.5rem; /* Added from designTokens.ts */
+    --border-radius-full: 9999px;
+
+    /* Spacing - ensure all values align with your needs; Tailwind defaults are extensive */
+    --spacing-0: 0px;
+    --spacing-px: 1px;
+    --spacing-0-5: 0.125rem; /* For .5 units like 'p-0.5' */
+    --spacing-1: 0.25rem;
+    --spacing-1-5: 0.375rem;
+    --spacing-2: 0.5rem;
+    --spacing-2-5: 0.625rem;
+    --spacing-3: 0.75rem;
+    --spacing-3-5: 0.875rem;
+    --spacing-4: 1rem;
+    --spacing-5: 1.25rem;
+    /* Add more spacing as needed, e.g., --spacing-6: 1.5rem, etc. */
 }
