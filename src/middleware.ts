@@ -35,7 +35,8 @@ export async function middleware(request: NextRequest) {
 
     if (pathname === '/') {
         const locale = getPreferredLocale(request);
-        return NextResponse.redirect(new URL('/en', request.url));
+        return NextResponse.redirect(new URL(`/${locale}`, request.url));
+
     }
 
     const pathnameParts = pathname.split('/');
