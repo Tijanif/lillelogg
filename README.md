@@ -1,8 +1,8 @@
-# Lillelogg PWA - "The little log for your big emotional journey."
+# Lillelogg - "The little log for your big emotional journey."
 
-Welcome to the Lillelogg Progressive Web App (PWA) repository! This project aims to provide new and experienced parents, with a simple, intuitive, and calm way to track their baby's activities, growth, and milestones.
+Welcome to the Lillelogg, a Progressive Web App (PWA) repository! This project aims to provide new and experienced parents, with a simple, intuitive, and calm way to track their baby's activities, growth, and milestones.
 
-Our focus is on a soothing, supportive, clean, modern, intuitive, trustworthy, gentle, and inclusive user experience.
+My focus is on a soothing, supportive, clean, modern, intuitive, trustworthy, gentle, and inclusive user experience.
 
 ## ✨ Design Principles: Lillelogg's Calm Aesthetic
 
