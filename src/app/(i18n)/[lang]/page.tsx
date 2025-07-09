@@ -3,6 +3,7 @@
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
+import { FaRegStar, FaChartLine, FaUsers } from 'react-icons/fa';
 
 
 export default function LandingPage() {
@@ -102,7 +103,7 @@ export default function LandingPage() {
                         <div className="grid md:grid-cols-3 gap-8">
                             <div className="bg-white p-6 rounded-2xl shadow-sm text-center border border-border-light"> {/* Added border */}
                                 <div className="w-16 h-16 bg-secondary-pink rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <span className="text-3xl">📝</span> {/* Reminder: PRD calls for line icons, not emojis */}
+                                    <FaRegStar className="text-3xl text-dark-text" />
                                 </div>
                                 <h3 className="text-xl font-medium text-dark-text mb-2">
                                     {t('landingPage.feature1Title')}
@@ -113,7 +114,7 @@ export default function LandingPage() {
                             </div>
                             <div className="bg-white p-6 rounded-2xl shadow-sm text-center border border-border-light">
                                 <div className="w-16 h-16 bg-secondary-yellow rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <span className="text-3xl">📊</span> {/* Reminder: PRD calls for line icons, not emojis */}
+                                    <FaChartLine className="text-3xl text-dark-text" />
                                 </div>
                                 <h3 className="text-xl font-medium text-dark-text mb-2">
                                     {t('landingPage.feature2Title')}
@@ -124,7 +125,7 @@ export default function LandingPage() {
                             </div>
                             <div className="bg-white p-6 rounded-2xl shadow-sm text-center border border-border-light">
                                 <div className="w-16 h-16 bg-secondary-green rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <span className="text-3xl">👪</span> {/* Reminder: PRD calls for line icons, not emojis */}
+                                    <FaUsers className="text-3xl text-dark-text" />
                                 </div>
                                 <h3 className="text-xl font-medium text-dark-text mb-2">
                                     {t('landingPage.feature3Title')}
