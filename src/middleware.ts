@@ -9,11 +9,13 @@ const i18n = {
 const PUBLIC_PATHS = [
     '',
     'signin',
+    'signup',
 ];
 
 const AUTH_REDIRECT_IF_LOGGED_IN_PATHS = [
     '',
     'signin',
+    'signup',
 ];
 
 function getPreferredLocale(request: NextRequest) {
