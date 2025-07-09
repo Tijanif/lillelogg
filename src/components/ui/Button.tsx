@@ -32,10 +32,12 @@ const buttonVariants = tv({
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
     isLoading?: boolean;
+    asChild?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant, size, fullWidth, focusOffset, isLoading, children, ...props }, ref) => {
+    ({ className, variant, size, fullWidth, focusOffset, isLoading, asChild, children, ...props }, ref) => {
+        const Component = asChild ? React.Fragment : 'button';
         return (
             <button
                 className={buttonVariants({ variant, size, fullWidth, focusOffset, className })}
