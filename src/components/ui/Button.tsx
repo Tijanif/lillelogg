@@ -30,31 +30,73 @@ const buttonVariants = tv({
     },
 });
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
+type PossibleRefElement = HTMLButtonElement | HTMLAnchorElement | HTMLElement;
+
+interface ButtonProps extends
+    Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'ref' | 'type'>,
+    VariantProps<typeof buttonVariants> {
     isLoading?: boolean;
     asChild?: boolean;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant, size, fullWidth, focusOffset, isLoading, asChild, children, ...props }, ref) => {
-        const Component = asChild ? React.Fragment : 'button';
+type ChildWithOptionalRef = React.ReactElement<
+    React.HTMLAttributes<HTMLElement> & {
+        className?: string;
+        ref?: React.Ref<unknown>;
+    }
+>;
+
+const Button = React.forwardRef<PossibleRefElement, ButtonProps>(
+    (
+        {
+            className,
+            variant,
+            size,
+            fullWidth,
+            focusOffset,
+            isLoading,
+            asChild,
+            children,
+            ...props
+        },
+        ref
+    ) => {
+        const baseClasses = buttonVariants({
+            variant,
+            size,
+            fullWidth,
+            focusOffset,
+            className,
+        });
+
+        if (asChild) {
+            if (React.Children.count(children) !== 1) {
+                console.warn('Button with asChild expects exactly one child.');
+                return null;
+            }
+
+            const child = React.Children.only(children) as ChildWithOptionalRef;
+
+            const mergedClassName = `${baseClasses} ${child.props.className || ''}`.trim();
+
+            return React.cloneElement(child, {
+                className: mergedClassName,
+                ref: ref as React.Ref<unknown>,
+                ...props,
+            });
+        }
+
         return (
             <button
-                className={buttonVariants({ variant, size, fullWidth, focusOffset, className })}
-                ref={ref}
+                className={baseClasses}
+                ref={ref as React.Ref<HTMLButtonElement>}
                 disabled={isLoading || props.disabled}
                 {...props}
-            >
-                {isLoading ? (
-                    // Simple loading spinner placeholder (can replace with an actual spinner component later)
-                    <span className="animate-spin inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
-                ) : (
-                    children
-                )}
-            </button>
+            />
         );
     }
 );
+
 Button.displayName = 'Button';
 
 export { Button, buttonVariants };
