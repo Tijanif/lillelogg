@@ -1,16 +1,27 @@
 {
   "appTitle": "Lillelogg",
+  "locale": "no",
   "landingPage": {
-    "heroHeadline": "Registrer babyens første øyeblikk, enkelt.",
-    "heroSubHeadline": "Fang opp dyrebare øyeblikk og milepæler med enkelhet. Lillelogg gjør det enkelt å følge med på babyens utvikling.",
-    "getStartedButton": "Kom i gang"
+    "heroHeadline": "Spor babyens første, enkelt.",
+    "heroSubHeadline1": "Fang dyrebare øyeblikk og milepæler med enkelhet.",
+    "heroSubHeadline2": "LilleLogg gjør det enkelt å holde oversikt over babyens vekst.",
+    "getStartedButton": "Kom i gang",
+    "appPreviewAlt": "Lillelogg Appforhåndsvisning på en telefonmockup",
+    "featuresHeadline": "Nøkkelfunksjoner",
+    "feature1Title": "Spor Milepæler",
+    "feature1Description": "Gå aldri glipp av et dyrebart øyeblikk med enkel sporing og påminnelser om milepæler",
+    "feature2Title": "Vekstanalyse",
+    "feature2Description": "Overvåk babyens utvikling med klare, innsiktsfulle diagrammer og data",
+    "feature3Title": "Familiedeling",
+    "feature3Description": "Del tilgang med omsorgspersoner og familiemedlemmer for sømløs koordinering"
   },
   "buttons": {
-    "login": "Logg Inn",
+    "login": "Logg inn",
     "signup": "Registrer deg"
   },
-  "inputs": {
-    "emailPlaceholder": "din@epost.no",
-    "passwordPlaceholder": "********"
+  "footer": {
+    "privacy": "Personvern",
+    "terms": "Vilkår",
+    "support": "Support"
   }
 }

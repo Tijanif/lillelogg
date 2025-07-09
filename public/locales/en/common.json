@@ -1,16 +1,27 @@
 {
   "appTitle": "Lillelogg",
+  "locale": "en",
   "landingPage": {
     "heroHeadline": "Track your baby's firsts, effortlessly.",
-    "heroSubHeadline": "Capture precious moments and milestones with simplicity. Lillelogg makes it easy to stay on top of your baby's growth.",
-    "getStartedButton": "Get Started"
+    "heroSubHeadline1": "Capture precious moments and milestones with simplicity.",
+    "heroSubHeadline2": "LilleLogg makes it easy to stay on top of your baby's growth.",
+    "getStartedButton": "Get Started",
+    "appPreviewAlt": "Lillelogg App Preview on a Phone Mockup",
+    "featuresHeadline": "Key Features",
+    "feature1Title": "Track Milestones",
+    "feature1Description": "Never miss a precious moment with easy milestone tracking and reminders",
+    "feature2Title": "Growth Analytics",
+    "feature2Description": "Monitor your baby's development with clear, insightful charts and data",
+    "feature3Title": "Family Sharing",
+    "feature3Description": "Share access with caregivers and family members for seamless coordination"
   },
   "buttons": {
-    "login": "Login",
+    "login": "Log In",
     "signup": "Sign Up"
   },
-  "inputs": {
-    "emailPlaceholder": "your@email.com",
-    "passwordPlaceholder": "********"
+  "footer": {
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "support": "Support"
   }
 }
