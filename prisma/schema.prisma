@@ -1,8 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// prisma/schema.prisma
 
 generator client {
   provider = "prisma-client-js"
@@ -12,4 +8,591 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+// --- Enums for Strong Typing and Consistency ---
+
+enum UserRole {
+  USER // Standard user
+  MEMBER // For BabyMembership roles (can log activities, view details)
+  OWNER // For BabyMembership roles (can manage baby, invite/remove members)
+  ADMIN // Future: App admin for content management etc.
+}
+
+enum BabyGender {
+  BOY
+  GIRL
+  UNDISCLOSED
+}
+
+enum FeedingType {
+  BREAST_LEFT
+  BREAST_RIGHT
+  BOTTLE_FORMULA
+  BOTTLE_PUMPED_MILK
+  SOLID_FOOD
+}
+
+enum DiaperType {
+  WET
+  DIRTY
+  MIXED
+}
+
+enum DiaperColor {
+  YELLOW
+  GREEN
+  BROWN
+  BLACK // Meconium
+  RED // Blood
+  OTHER
+}
+
+enum DiaperConsistency {
+  SOFT
+  LOOSE
+  FIRM
+  WATERY
+  PELLET
+  OTHER
+}
+
+enum SleepLocation {
+  CRIB
+  STROLLER
+  CARRIER
+  BED
+  OTHER
+}
+
+enum RoutineType {
+  FEEDING
+  SLEEP
+  DIAPER
+  PLAY
+  MEDICATION
+  OTHER
+}
+
+enum RoutineFrequencyUnit {
+  HOURS
+  DAYS
+  WEEKS
+  MONTHS
+}
+
+enum MilestoneCategory {
+  MOTOR_SKILLS
+  COGNITIVE
+  SOCIAL_EMOTIONAL
+  LANGUAGE
+  FIRSTS // e.g., first smile, first word
+  OTHER
+}
+
+enum MeasurementUnit {
+  KG
+  LBS // for weight
+  CM
+  IN // for height/head circumference
+}
+
+enum DoctorAppointmentType {
+  ROUTINE_CHECKUP
+  VACCINATION
+  SPECIALIST
+  URGENT
+  OTHER
+}
+
+enum PhotoSource {
+  UPLOAD
+  MILESTONE
+  ACTIVITY // e.g., auto-attached to an activity log
+}
+
+enum NotificationType {
+  REMINDER_ROUTINE
+  REMINDER_APPOINTMENT
+  DAILY_SUMMARY
+  NEW_MILESTONE_SUGGESTION
+  ACCOUNT_ACTIVITY // e.g., partner joined
+  CONTENT_UPDATE // new tip/resource
+  OTHER
+}
+
+enum ActivityTemplateType {
+  FEEDING
+  SLEEP
+  DIAPER
+  MEDICATION
+  OTHER
+}
+
+enum DataExportType {
+  PDF
+  CSV
+  JSON
+}
+
+enum DataExportStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum ContentCategory {
+  DEVELOPMENT
+  HEALTH
+  NUTRITION
+  SLEEP
+  PLAY
+  PARENTING_BASICS
+  SAFETY
+  POSTPARTUM
+  OTHER
+}
+
+enum ContentLanguage {
+  EN
+  NO
+}
+
+// --- NextAuth.js Models ---
+// These models are required by @next-auth/prisma-adapter.
+// DO NOT CHANGE THEIR NAMES OR REQUIRED FIELDS unless you customize the adapter.
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  role          UserRole  @default(USER)
+
+  accounts Account[]
+  sessions Session[]
+
+  babies            Baby[]
+  feedings          Feeding[]
+  sleeps            Sleep[]
+  diapers           Diaper[]
+  milestones        Milestone[]
+  growthEntries     GrowthEntry[]
+  routines          Routine[]
+  photos            Photo[]
+  appointments      DoctorAppointment[]
+  notifications     Notification[]
+  activityTemplates ActivityTemplate[]
+  dataExports       DataExport[]
+  tipsCreated       Tip[]               @relation("UserTips")
+  resourcesCreated  Resource[]          @relation("UserResources")
+
+  babyMemberships    BabyMembership[] @relation("BabyUserMembership")
+  invitedMemberships BabyMembership[] @relation("InvitedMemberships")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// --- Core Application Models ---
+
+model Baby {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name        String
+  dateOfBirth DateTime
+  gender      BabyGender?
+  avatarUrl   String?
+  bio         String?     @db.Text
+  timezone    String?
+
+  isDeleted Boolean   @default(false)
+  deletedAt DateTime?
+
+  feedings          Feeding[]
+  sleeps            Sleep[]
+  diapers           Diaper[]
+  milestones        Milestone[]
+  growthEntries     GrowthEntry[]
+  routines          Routine[]
+  photos            Photo[]
+  appointments      DoctorAppointment[]
+  notifications     Notification[]
+  activityTemplates ActivityTemplate[]
+  dataExports       DataExport[]
+
+  memberships BabyMembership[] @relation("BabyUserMembership")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([isDeleted])
+}
+
+model BabyMembership {
+  id          String   @id @default(cuid())
+  babyId      String
+  baby        Baby     @relation("BabyUserMembership", fields: [babyId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation("BabyUserMembership", fields: [userId], references: [id], onDelete: Cascade)
+  role        UserRole @default(MEMBER)
+  invitedById String?
+  invitedBy   User?    @relation("InvitedMemberships", fields: [invitedById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([babyId, userId])
+  @@index([userId, babyId])
+}
+
+// --- Activity Tracking Models ---
+
+model Feeding {
+  id     String @id @default(cuid())
+  babyId String
+  baby   Baby   @relation(fields: [babyId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type      FeedingType
+  amount    Float?
+  unit      MeasurementUnit?
+  startTime DateTime
+  endTime   DateTime?
+  notes     String?          @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([babyId, startTime])
+  @@index([userId, startTime])
+  @@index([babyId, userId, startTime])
+}
+
+model Sleep {
+  id     String @id @default(cuid())
+  babyId String
+  baby   Baby   @relation(fields: [babyId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  startTime DateTime
+  endTime   DateTime?
+  location  SleepLocation?
+  notes     String?        @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([babyId, startTime])
+  @@index([userId, startTime])
+  @@index([babyId, userId, startTime])
+}
+
+model Diaper {
+  id     String @id @default(cuid())
+  babyId String
+  baby   Baby   @relation(fields: [babyId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type        DiaperType
+  time        DateTime
+  notes       String?            @db.Text
+  color       DiaperColor?
+  consistency DiaperConsistency?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([babyId, time])
+  @@index([userId, time])
+  @@index([babyId, userId, time])
+}
+
+model Milestone {
+  id     String @id @default(cuid())
+  babyId String
+  baby   Baby   @relation(fields: [babyId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title       String
+  description String?            @db.Text
+  date        DateTime
+  category    MilestoneCategory?
+  isSuggested Boolean            @default(false)
+
+  photo   Photo?  @relation(fields: [photoId], references: [id], onDelete: SetNull)
+  photoId String? @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([babyId, date])
+  @@index([userId, date])
+  @@index([babyId, userId, date])
+}
+
+model GrowthEntry {
+  id     String @id @default(cuid())
+  babyId String
+  baby   Baby   @relation(fields: [babyId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  date              DateTime         @default(now())
+  weight            Float?
+  weightUnit        MeasurementUnit?
+  height            Float?
+  heightUnit        MeasurementUnit?
+  headCircumference Float?
+  headCircUnit      MeasurementUnit?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([babyId, date])
+  @@index([userId, date])
+  @@index([babyId, userId, date])
+}
+
+model Routine {
+  id     String @id @default(cuid())
+  babyId String
+  baby   Baby   @relation(fields: [babyId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name            String
+  description     String?               @db.Text
+  type            RoutineType?
+  startTimeStr    String
+  endTimeStr      String?
+  frequencyValue  Int?
+  frequencyUnit   RoutineFrequencyUnit?
+  daysOfWeek      String[]
+  isActive        Boolean               @default(true)
+  lastCompletedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([babyId, isActive])
+  @@index([userId, isActive])
+}
+
+model Photo {
+  id     String @id @default(cuid())
+  babyId String
+  baby   Baby   @relation(fields: [babyId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  url       String
+  caption   String?      @db.Text
+  timestamp DateTime     @default(now())
+  source    PhotoSource?
+
+  fileSize         Int?
+  mimeType         String?
+  originalFilename String?
+
+  isPublic Boolean @default(false)
+
+  milestone Milestone?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([babyId, timestamp])
+  @@index([userId, timestamp])
+}
+
+model DoctorAppointment {
+  id     String @id @default(cuid())
+  babyId String
+  baby   Baby   @relation(fields: [babyId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title        String
+  type         DoctorAppointmentType?
+  dateTime     DateTime
+  location     String?
+  notes        String?                @db.Text
+  vaccineGiven String?
+  isCompleted  Boolean                @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([babyId, dateTime])
+  @@index([userId, dateTime])
+  @@index([babyId, isCompleted])
+}
+
+// --- Content Models ---
+
+model WeeklyDevelopmentInfo {
+  id          String          @id @default(cuid())
+  weekNumber  Int             @unique
+  title       String
+  description String          @db.Text
+  imageUrl    String?
+  language    ContentLanguage @default(EN)
+
+  version  Int     @default(1)
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([weekNumber, language, isActive])
+}
+
+model Tip {
+  id          String           @id @default(cuid())
+  title       String
+  content     String           @db.Text
+  category    ContentCategory?
+  minAgeWeeks Int?
+  maxAgeWeeks Int?
+  author      String?
+  priority    Int              @default(0)
+  language    ContentLanguage  @default(EN)
+
+  submittedById String?
+  submittedBy   User?   @relation("UserTips", fields: [submittedById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category, minAgeWeeks, maxAgeWeeks])
+  @@index([language])
+}
+
+model Resource {
+  id          String           @id @default(cuid())
+  title       String
+  description String?          @db.Text
+  url         String?
+  content     String?          @db.Text
+  category    ContentCategory?
+  imageUrl    String?
+  language    ContentLanguage  @default(EN)
+
+  submittedById String?
+  submittedBy   User?   @relation("UserResources", fields: [submittedById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@index([language])
+}
+
+// --- Advanced Future Features (Placeholder Models) ---
+
+model Notification {
+  id     String  @id @default(cuid())
+  userId String
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  babyId String?
+  baby   Baby?   @relation(fields: [babyId], references: [id], onDelete: SetNull)
+
+  type         NotificationType
+  title        String
+  message      String           @db.Text
+  isRead       Boolean          @default(false)
+  scheduledFor DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, isRead])
+  @@index([babyId, isRead])
+  @@index([userId, babyId, isRead])
+}
+
+model ActivityTemplate {
+  id     String  @id @default(cuid())
+  userId String
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  babyId String?
+  baby   Baby?   @relation(fields: [babyId], references: [id], onDelete: SetNull)
+
+  name          String
+  type          ActivityTemplateType
+  defaultValues Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, name])
+  @@index([userId, type])
+  @@index([babyId, type])
+}
+
+model DataExport {
+  id     String  @id @default(cuid())
+  userId String
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  babyId String?
+  baby   Baby?   @relation(fields: [babyId], references: [id], onDelete: SetNull)
+
+  exportType  DataExportType
+  status      DataExportStatus
+  fileUrl     String?
+  initiatedAt DateTime
+  completedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, status])
+  @@index([babyId, status])
 }
