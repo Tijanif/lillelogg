@@ -23,5 +23,29 @@
     "privacy": "Privacy",
     "terms": "Terms",
     "support": "Support"
+  },
+  "inputs": {
+    "emailLabel": "Email",
+    "emailPlaceholder": "Enter your email",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter your password"
+  },
+  "auth": {
+    "errors": {
+      "default": "An unknown error occurred. Please try again.",
+      "CredentialsSignin": "Sign in failed. Check your email and password.",
+      "Callback": "An error occurred during authentication.",
+      "OAuthSignin": "Error with OAuth provider. Please try again.",
+      "OAuthCallback": "Error with OAuth callback. Please try again."
+    },
+    "noAccountYet": "Don't have an account yet?",
+    "signInWithGoogle": "Sign in with Google",
+    "dashboard": {
+      "welcome": "Welcome, {{name}}!",
+      "status": "Logged in as: {{email}} (Role: {{role}})"
+    },
+    "buttons": {
+      "logout": "Log Out"
+    }
   }
 }

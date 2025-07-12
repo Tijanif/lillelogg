@@ -23,5 +23,29 @@
     "privacy": "Personvern",
     "terms": "Vilkår",
     "support": "Support"
+  },
+  "inputs": {
+    "emailLabel": "E-post",
+    "emailPlaceholder": "Skriv inn din e-post",
+    "passwordLabel": "Passord",
+    "passwordPlaceholder": "Skriv inn ditt passord"
+  },
+  "auth": {
+    "errors": {
+      "default": "En ukjent feil oppstod. Vennligst prøv igjen.",
+      "CredentialsSignin": "Innlogging mislyktes. Sjekk e-post og passord.",
+      "Callback": "En feil oppstod under autentisering.",
+      "OAuthSignin": "Feil med OAuth-leverandør. Vennligst prøv igjen.",
+      "OAuthCallback": "Feil med OAuth-tilbakekall. Vennligst prøv igjen."
+    },
+    "noAccountYet": "Har du ingen konto enda?",
+    "signInWithGoogle": "Logg inn med Google",
+    "dashboard": {
+      "welcome": "Velkommen, {{name}}!",
+      "status": "Logget inn som: {{email}} (Rolle: {{role}})"
+    },
+    "buttons": {
+      "logout": "Logg ut"
+    }
   }
 }
