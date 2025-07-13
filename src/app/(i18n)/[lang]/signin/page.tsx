@@ -88,7 +88,6 @@ export default function SignInPage() {
                 {/* Example Google Sign-in button */}
                 <div className="mt-6 border-t border-border-light pt-6">
                     <Button
-                        asChild
                         fullWidth
                         size="lg"
                         variant="secondary-outline"
