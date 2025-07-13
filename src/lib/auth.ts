@@ -4,6 +4,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import prisma from './prisma';
 import { compare } from 'bcryptjs';
+import { UserRole } from '@prisma/client';
 
 
 export const authOptions: AuthOptions = {
@@ -35,6 +36,11 @@ export const authOptions: AuthOptions = {
                     return null;
                 }
 
+                if (!user.hashedPassword) {
+                    console.log('Authentication failed: User has no password set (e.g., OAuth user trying credentials).');
+                    return null;
+                }
+
                 const isPasswordValid = await compare(credentials.password, user.hashedPassword || '');
                 if (!isPasswordValid) {
                   console.log('Authentication failed: Invalid password.');
@@ -48,7 +54,7 @@ export const authOptions: AuthOptions = {
                     id: user.id,
                     name: user.name,
                     email: user.email,
-                    role: user.role,
+                    role: user.role as UserRole,
                 };
             },
         }),
@@ -68,14 +74,14 @@ export const authOptions: AuthOptions = {
         async jwt({ token, user, account }) {
             if (user) {
                 token.id = user.id;
-                token.role = user.role;
+                token.role = user.role as UserRole;
             }
             return token;
         },
         async session({ session, token }) {
             if (session.user) {
                 session.user.id = token.id as string;
-                session.user.role = token.role as string;
+                session.user.role = token.role as UserRole;
             }
             return session;
         },

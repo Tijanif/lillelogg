@@ -33,7 +33,7 @@ const buttonVariants = tv({
 type PossibleRefElement = HTMLButtonElement | HTMLAnchorElement | HTMLElement;
 
 interface ButtonProps extends
-    Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'ref' | 'type'>,
+    Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'ref'>,
     VariantProps<typeof buttonVariants> {
     isLoading?: boolean;
     asChild?: boolean;
@@ -57,6 +57,7 @@ const Button = React.forwardRef<PossibleRefElement, ButtonProps>(
             isLoading,
             asChild,
             children,
+            type,
             ...props
         },
         ref

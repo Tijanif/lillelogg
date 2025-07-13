@@ -10,7 +10,7 @@ import Link from 'next/link';
 
 export default function SignInPage() {
     const { t } = useTranslation('common');
-    const router = useRouter(); // Initialize useRouter
+    const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
@@ -32,8 +32,8 @@ export default function SignInPage() {
 
         if (result?.error) {
 
-            console.error("Sign in error:", result.error); // Log the actual error for debugging
-            setError(t(`auth.errors.${result.error}`) || t('auth.errors.default')); // Use i18n for error messages
+            console.error("Sign in error:", result.error);
+            setError(t(`auth.errors.${result.error}`) || t('auth.errors.default'));
         } else if (result?.ok) {
             router.push(result.url || `/${t('common:locale')}/dashboard`);
         }
@@ -88,7 +88,7 @@ export default function SignInPage() {
                 {/* Example Google Sign-in button */}
                 <div className="mt-6 border-t border-border-light pt-6">
                     <Button
-                        type="button"
+                        asChild
                         fullWidth
                         size="lg"
                         variant="secondary-outline"
