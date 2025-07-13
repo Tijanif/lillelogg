@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { FaGoogle } from 'react-icons/fa';
 
 export default function SignInPage() {
     const { t } = useTranslation('common');
@@ -40,7 +41,7 @@ export default function SignInPage() {
     };
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-light-background text-dark-text">
+        <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-light-background text-dark-text">
             <div className="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-border-light">
                 <h1 className="text-3xl font-bold text-dark-text text-center mb-6">
                     {t('buttons.login')}
@@ -85,7 +86,6 @@ export default function SignInPage() {
                 </Link>
                 </div>
 
-                {/* Example Google Sign-in button */}
                 <div className="mt-6 border-t border-border-light pt-6">
                     <Button
                         fullWidth
@@ -94,7 +94,7 @@ export default function SignInPage() {
                         onClick={() => signIn('google', { callbackUrl: `/${t('common:locale')}/dashboard` })}
                         className="flex items-center justify-center"
                     >
-                        {/* Google icon here */}
+                        <FaGoogle className="mr-2  text-xl"/>
                         {t('auth.signInWithGoogle')}
                     </Button>
                 </div>

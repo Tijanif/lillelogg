@@ -57,7 +57,7 @@ const Button = React.forwardRef<PossibleRefElement, ButtonProps>(
             isLoading,
             asChild,
             children,
-            type,
+            type = 'button',
             ...props
         },
         ref
@@ -92,8 +92,15 @@ const Button = React.forwardRef<PossibleRefElement, ButtonProps>(
                 className={baseClasses}
                 ref={ref as React.Ref<HTMLButtonElement>}
                 disabled={isLoading || props.disabled}
+                type={type}
                 {...props}
-            />
+            >
+                {isLoading ? (
+                    <span className="animate-spin inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
+                ) : (
+                    children
+                )}
+            </button>
         );
     }
 );

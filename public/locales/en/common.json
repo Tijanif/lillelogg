@@ -28,7 +28,11 @@
     "emailLabel": "Email",
     "emailPlaceholder": "Enter your email",
     "passwordLabel": "Password",
-    "passwordPlaceholder": "Enter your password"
+    "passwordPlaceholder": "Enter your password",
+    "nameLabel": "Name (Optional)",
+    "namePlaceholder": "Enter your name",
+    "confirmPasswordLabel": "Confirm Password",
+    "confirmPasswordPlaceholder": "Re-enter your password"
   },
   "auth": {
     "errors": {
@@ -36,10 +40,15 @@
       "CredentialsSignin": "Sign in failed. Check your email and password.",
       "Callback": "An error occurred during authentication.",
       "OAuthSignin": "Error with OAuth provider. Please try again.",
-      "OAuthCallback": "Error with OAuth callback. Please try again."
+      "OAuthCallback": "Error with OAuth callback. Please try again.",
+      "passwordsMismatch": "Passwords do not match.",
+      "userExists": "A user with this email already exists.",
+      "networkError": "Network error. Please check your internet connection."
     },
     "noAccountYet": "Don't have an account yet?",
     "signInWithGoogle": "Sign in with Google",
+    "alreadyHaveAccount": "Already have an account?",
+    "registrationSuccess": "Registration successful! Redirecting to login...",
     "dashboard": {
       "welcome": "Welcome, {{name}}!",
       "status": "Logged in as: {{email}} (Role: {{role}})"

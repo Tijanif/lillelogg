@@ -27,7 +27,7 @@ export default function LandingPage() {
                         </Link>
                         <div className="flex space-x-4">
                             <Button
-                                 asChild // asChild allows Button to render a Link component
+                                asChild
                                 variant="ghost"
                                 size="sm"
                             >
@@ -37,7 +37,7 @@ export default function LandingPage() {
                             </Button>
 
                             <Button
-                                 asChild
+                                asChild
                                 variant="primary"
                                 size="sm"
                             >
@@ -65,7 +65,7 @@ export default function LandingPage() {
                                 {t('landingPage.heroSubHeadline2')}
                             </p>
                             <Button
-                                 asChild
+                                asChild
                                 variant="primary"
                                 size="xl"
                                 className="mt-4"
@@ -76,13 +76,6 @@ export default function LandingPage() {
                             </Button>
                         </div>
                         <div className="relative flex justify-center md:justify-end">
-                            {/* Placeholder for "Father with baby" illustration - not created yet */}
-                            {/*<img*/}
-                            {/*    src="/images/parent_baby_illustration_copy.png" // Placeholder, for one we will create later*/}
-                            {/*    alt="Father with baby"*/}
-                            {/*    className="absolute -top-16 -left-16 w-64 h-auto object-contain z-0 hidden md:block"*/}
-                            {/*/>*/}
-                            {/* App Preview on Phone Mockup */}
                             <div className="relative w-full max-w-lg rounded-3xl overflow-hidden shadow-xl bg-card-background border border-border-light p-2 sm:p-4"> {/* Minimalistic device frame */}
                                 <img
                                     src="/images/lillelogg_app_homepreview.webp"

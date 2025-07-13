@@ -28,7 +28,11 @@
     "emailLabel": "E-post",
     "emailPlaceholder": "Skriv inn din e-post",
     "passwordLabel": "Passord",
-    "passwordPlaceholder": "Skriv inn ditt passord"
+    "passwordPlaceholder": "Skriv inn ditt passord",
+    "nameLabel": "Navn (Valgfritt)",
+    "namePlaceholder": "Skriv inn ditt navn",
+    "confirmPasswordLabel": "Bekreft passord",
+    "confirmPasswordPlaceholder": "Gjenta passordet"
   },
   "auth": {
     "errors": {
@@ -36,10 +40,15 @@
       "CredentialsSignin": "Innlogging mislyktes. Sjekk e-post og passord.",
       "Callback": "En feil oppstod under autentisering.",
       "OAuthSignin": "Feil med OAuth-leverandør. Vennligst prøv igjen.",
-      "OAuthCallback": "Feil med OAuth-tilbakekall. Vennligst prøv igjen."
+      "OAuthCallback": "Feil med OAuth-tilbakekall. Vennligst prøv igjen.",
+      "passwordsMismatch": "Passordene stemmer ikke overens.",
+      "userExists": "En bruker med denne e-posten finnes allerede.",
+      "networkError": "Nettverksfeil. Vennligst sjekk internettforbindelsen din."
     },
     "noAccountYet": "Har du ingen konto enda?",
     "signInWithGoogle": "Logg inn med Google",
+    "alreadyHaveAccount": "Har du allerede en konto?",
+    "registrationSuccess": "Registrering vellykket! Omdirigerer til innlogging...",
     "dashboard": {
       "welcome": "Velkommen, {{name}}!",
       "status": "Logget inn som: {{email}} (Rolle: {{role}})"
