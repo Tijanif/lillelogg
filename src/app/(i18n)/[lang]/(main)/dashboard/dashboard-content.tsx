@@ -1,20 +1,18 @@
 'use client';
 
 import { useTranslation } from 'react-i18next';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/Button';
+import { Session } from 'next-auth';
 
-export default function DashboardPage() {
+interface DashboardContentProps {
+    session: Session | null;
+    lang: string;
+}
+
+export default function DashboardContent({ session, lang }: DashboardContentProps) {
     const { t } = useTranslation('common');
-    const { data: session, status } = useSession();
 
-    if (status === "loading") {
-        return (
-            <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-light-background text-dark-text">
-                <p>{t('common:loading')}</p>
-            </main>
-        );
-    }
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-light-background text-dark-text">
@@ -25,7 +23,7 @@ export default function DashboardPage() {
                 {t('dashboard.status', { email: session?.user?.email || 'N/A', role: session?.user?.role || 'N/A' })}
             </p>
 
-            <Button onClick={() => signOut({ callbackUrl: `/${t('common:locale')}/signin` })} variant="primary" size="md">
+            <Button onClick={() => signOut({ callbackUrl: `/${lang}/signin` })} variant="primary" size="md">
                 {t('buttons.logout')}
             </Button>
         </main>
