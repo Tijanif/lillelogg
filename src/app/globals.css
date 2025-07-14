@@ -7,19 +7,19 @@ body {
 
 @theme {
     /* Colors */
-    --color-light-background: #FFFFFF;
-    --color-card-background: #F2F6FA;
-    --color-primary-blue: #4D85FF;
-    --color-primary-blue-light: #8DAEFF;
-    --color-secondary-pink: #FFDDE2;
-    --color-secondary-yellow: #FFECB3;
-    --color-secondary-green: #C8E6C9;
-    --color-dark-text: #333333;
-    --color-muted-text: #6B7280;
-    --color-border-light: #E5E7EB;
-    --color-success: #4CAF50;
-    --color-warning: #FFC107;
-    --color-error: #F44336;
+    --color-light-background: #F8F8F8; /* Very light gray/off-white for main page backgrounds */
+    --color-card-background: #FFFFFF; /* Pure white for card backgrounds, input fields */
+    --color-primary-blue: #5B86E5;    /* Soft blue accent for primary actions, active states */
+    --color-primary-blue-light: #99B7F1; /* Lighter shade of primary blue for hover/active states */
+    --color-secondary-pink: #FEE9ED; /* Pastel pink accent - for icons like Feedings */
+    --color-secondary-blue-accent: #E1F2FF; /* NEW: Very light blue accent - for icons like Naps */
+    --color-secondary-gray-accent: #EBECEB; /* NEW: Very light gray accent - for icons like Diapers */
+    --color-dark-text: #333333;       /* Dark gray for main text, headings */
+    --color-muted-text: #6B7280;      /* Medium gray for less prominent text, placeholders */
+    --color-border-light: #E0E0E0;    /* Light gray for borders/dividers */
+    --color-success: #4CAF50;         /* Standard green for success messages */
+    --color-warning: #FFC107;         /* Standard amber for warning messages */
+    --color-error: #F44336;           /* Standard red for error messages */
 
     /* Typography - using Tailwind's standard prefixes for utilities to work directly */
     --font-family-sans: 'Inter', sans-serif;
