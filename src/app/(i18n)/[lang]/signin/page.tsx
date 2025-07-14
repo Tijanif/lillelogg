@@ -42,7 +42,7 @@ export default function SignInPage() {
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-center p-8 bg-light-background text-dark-text">
-            <div className="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-border-light">
+            <div className="bg-card-background p-8 rounded-2xl shadow-xl max-w-md w-full border border-border-light">
                 <h1 className="text-3xl font-bold text-dark-text text-center mb-6">
                     {t('buttons.login')}
                 </h1>
