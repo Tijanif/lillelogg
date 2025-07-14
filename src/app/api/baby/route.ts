@@ -6,21 +6,19 @@ import { UserRole } from '@prisma/client';
 
 export async function POST(request: NextRequest) {
     try {
-        const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
-
-        if (!token || !token.id) {
-            return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-        }
-
-        const userId = token.id as string;
         const body = await request.json();
-        console.log('Create Baby API: Received body:', body);
 
         const validatedData = createBabySchema.safeParse(body);
 
         if (!validatedData.success) {
             console.error('Create Baby API: Validation error:', validatedData.error.issues);
             return NextResponse.json({ errors: validatedData.error.issues }, { status: 400 });
+        }
+
+        const userId = (await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET }))?.id as string;
+
+        if (!userId) {
+            return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
         }
 
         const { name, dateOfBirth, gender, avatarUrl, bio, timezone } = validatedData.data;
@@ -36,7 +34,6 @@ export async function POST(request: NextRequest) {
                 avatarUrl,
                 bio,
                 timezone,
-
                 memberships: {
                     create: {
                         userId: userId,
@@ -44,7 +41,6 @@ export async function POST(request: NextRequest) {
                     },
                 },
             },
-
             select: {
                 id: true,
                 name: true,
@@ -61,12 +57,10 @@ export async function POST(request: NextRequest) {
             }
         });
 
-        console.log('Create Baby API: Baby profile created successfully:', newBaby.name);
         return NextResponse.json({ baby: newBaby, message: 'Baby profile created successfully' }, { status: 201 });
 
     } catch (error) {
         console.error('Create Baby API: An unexpected error occurred:', error);
-
         if (error instanceof Error) {
             return NextResponse.json({ message: 'Something went wrong.', error: error.message }, { status: 500 });
         }
