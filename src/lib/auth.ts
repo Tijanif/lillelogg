@@ -23,7 +23,6 @@ export const authOptions: AuthOptions = {
                     return null;
                 }
 
-
                 const user = await prisma.user.findUnique({
                     where: {
                         email: credentials.username,
@@ -32,7 +31,6 @@ export const authOptions: AuthOptions = {
 
 
                 if (!user) {
-                    console.log('Authentication failed: User not found in database.');
                     return null;
                 }
 
@@ -40,15 +38,12 @@ export const authOptions: AuthOptions = {
                     console.log('Authentication failed: User has no password set (e.g., OAuth user trying credentials).');
                     return null;
                 }
+                const isPasswordValid = await compare(credentials.password, user.hashedPassword);
 
-                const isPasswordValid = await compare(credentials.password, user.hashedPassword || '');
                 if (!isPasswordValid) {
-                  console.log('Authentication failed: Invalid password.');
-                  return null;
+                    console.log('Authentication failed: Invalid password.');
+                    return null;
                 }
-
-                console.log('Authentication successful for user:', user.email);
-
 
                 return {
                     id: user.id,
@@ -58,12 +53,10 @@ export const authOptions: AuthOptions = {
                 };
             },
         }),
-
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
         }),
-
     ],
 
     session: {
@@ -90,5 +83,5 @@ export const authOptions: AuthOptions = {
         signIn: '/en/signin',
     },
     secret: process.env.NEXTAUTH_SECRET,
-    debug: process.env.NODE_ENV === 'development',
+    debug: process.env.NODE_ENV === 'development', // Keep this for dev environment
 };
