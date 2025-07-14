@@ -94,7 +94,7 @@ export default function LandingPage() {
                             {t('landingPage.featuresHeadline')}
                         </h2>
                         <div className="grid md:grid-cols-3 gap-8">
-                            <div className="bg-white p-6 rounded-2xl shadow-sm text-center border border-border-light"> {/* Added border */}
+                            <div className="bg-card-background p-6 rounded-2xl shadow-sm text-center border border-border-light">
                                 <div className="w-16 h-16 bg-secondary-pink rounded-full flex items-center justify-center mx-auto mb-4">
                                     <FaRegStar className="text-3xl text-dark-text" />
                                 </div>
@@ -105,8 +105,8 @@ export default function LandingPage() {
                                     {t('landingPage.feature1Description')}
                                 </p>
                             </div>
-                            <div className="bg-white p-6 rounded-2xl shadow-sm text-center border border-border-light">
-                                <div className="w-16 h-16 bg-secondary-yellow rounded-full flex items-center justify-center mx-auto mb-4">
+                            <div className="bg-card-background p-6 rounded-2xl shadow-sm text-center border border-border-light">
+                                <div className="w-16 h-16 bg-secondary-blue-accent rounded-full flex items-center justify-center mx-auto mb-4"> //
                                     <FaChartLine className="text-3xl text-dark-text" />
                                 </div>
                                 <h3 className="text-xl font-medium text-dark-text mb-2">
@@ -116,8 +116,8 @@ export default function LandingPage() {
                                     {t('landingPage.feature2Description')}
                                 </p>
                             </div>
-                            <div className="bg-white p-6 rounded-2xl shadow-sm text-center border border-border-light">
-                                <div className="w-16 h-16 bg-secondary-green rounded-full flex items-center justify-center mx-auto mb-4">
+                            <div className="bg-card-background p-6 rounded-2xl shadow-sm text-center border border-border-light">
+                                <div className="w-16 h-16 bg-secondary-blue-accent rounded-full flex items-center justify-center mx-auto mb-4"> //
                                     <FaUsers className="text-3xl text-dark-text" />
                                 </div>
                                 <h3 className="text-xl font-medium text-dark-text mb-2">
@@ -133,7 +133,7 @@ export default function LandingPage() {
             </main>
 
             {/* Footer */}
-            <footer className="bg-white border-t border-border-light py-8">
+            <footer className="bg-card-background border-t border-border-light py-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col md:flex-row justify-between items-center">
                         <div className="flex items-center mb-4 md:mb-0">
