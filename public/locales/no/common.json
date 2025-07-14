@@ -32,7 +32,30 @@
     "nameLabel": "Navn (Valgfritt)",
     "namePlaceholder": "Skriv inn ditt navn",
     "confirmPasswordLabel": "Bekreft passord",
-    "confirmPasswordPlaceholder": "Gjenta passordet"
+    "confirmPasswordPlaceholder": "Gjenta passordet",
+    "babyNameLabel": "Babyens navn",
+    "babyNamePlaceholder": "Skriv inn babyens navn",
+    "dateOfBirthLabel": "Fødselsdato",
+    "dateOfBirthPlaceholder": "ÅÅÅÅ-MM-DD",
+    "genderLabel": "Kjønn",
+    "genderBoy": "Gutt",
+    "genderGirl": "Jente",
+    "genderUndisclosed": "Ønsker ikke å oppgi",
+    "timezoneLabel": "Tidssone (f.eks. Europe/Oslo)",
+    "timezonePlaceholder": "f.eks. Europe/Oslo"
+  },
+  "babySetup": {
+    "headline": "Sett opp babyens profil",
+    "saveButton": "Lagre babyprofil",
+    "success": "Babyprofil ble opprettet!",
+    "errors": {
+      "default": "Kunne ikke opprette babyprofil. Vennligst prøv igjen.",
+      "invalidDate": "Vennligst oppgi en gyldig fødselsdato (ÅÅÅÅ-MM-DD).",
+      "networkError": "Nettverksfeil. Vennligst sjekk internettforbindelsen din."
+    }
+  },
+  "common": {
+    "loading": "Laster inn..."
   },
   "auth": {
     "errors": {
