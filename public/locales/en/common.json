@@ -32,7 +32,30 @@
     "nameLabel": "Name (Optional)",
     "namePlaceholder": "Enter your name",
     "confirmPasswordLabel": "Confirm Password",
-    "confirmPasswordPlaceholder": "Re-enter your password"
+    "confirmPasswordPlaceholder": "Re-enter your password",
+    "babyNameLabel": "Baby's Name",
+    "babyNamePlaceholder": "Enter your baby's name",
+    "dateOfBirthLabel": "Date of Birth",
+    "dateOfBirthPlaceholder": "YYYY-MM-DD",
+    "genderLabel": "Gender",
+    "genderBoy": "Boy",
+    "genderGirl": "Girl",
+    "genderUndisclosed": "Prefer not to say",
+    "timezoneLabel": "Time Zone (e.g., Europe/Oslo)",
+    "timezonePlaceholder": "e.g., Europe/Oslo"
+  },
+  "babySetup": {
+    "headline": "Set Up Your Baby's Profile",
+    "saveButton": "Save Baby Profile",
+    "success": "Baby profile created successfully!",
+    "errors": {
+      "default": "Failed to create baby profile. Please try again.",
+      "invalidDate": "Please enter a valid date of birth (YYYY-MM-DD).",
+      "networkError": "Network error. Please check your internet connection."
+    }
+  },
+  "common": {
+    "loading": "Loading..."
   },
   "auth": {
     "errors": {
