@@ -15,22 +15,42 @@
     "feature3Title": "Familiedeling",
     "feature3Description": "Del tilgang med omsorgspersoner og familiemedlemmer for sømløs koordinering"
   },
-  "buttons": {
-    "login": "Logg inn",
-    "signup": "Registrer deg"
+  "dashboard": {
+    "hiParent": "Hei, {{name}}!",
+    "parent": "Forelder",
+    "babyInfo": "Baby: {{name}}, {{age}}",
+    "feedings": "Matinger",
+    "naps": "Lurer",
+    "diapers": "Bleier",
+    "minutesAgo": "{{count}} min siden",
+    "hoursAgo": "{{count}} t siden",
+    "daysAgo": "{{count}} dager siden",
+    "notLoggedYet": "Ikke logget ennå",
+    "justNow": "Akkurat nå",
+    "duration": "{{duration}} min",
+    "addFeeding": "Legg til mating",
+    "addNap": "Legg til lur",
+    "dailyTip": "Dagens tips",
+    "noTipToday": "Ingen tips for i dag. Sjekk igjen i morgen!",
+    "upcomingRoutines": "Kommende rutiner",
+    "noRoutines": "Ingen rutiner planlagt for i dag."
   },
   "nav": {
-    "dashboard": "Dashbord",
+    "dashboard": "Hjem",
     "logActivity": "Logg aktivitet",
     "milestones": "Milepæler",
     "routines": "Rutiner",
-    "insights": "Innsikt",
+    "insights": "Analyse",
     "settings": "Innstillinger"
   },
   "footer": {
     "privacy": "Personvern",
     "terms": "Vilkår",
     "support": "Support"
+  },
+  "buttons": {
+    "login": "Logg inn",
+    "signup": "Registrer deg"
   },
   "inputs": {
     "emailLabel": "E-post",
