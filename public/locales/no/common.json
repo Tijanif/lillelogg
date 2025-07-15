@@ -19,6 +19,14 @@
     "login": "Logg inn",
     "signup": "Registrer deg"
   },
+  "nav": {
+    "dashboard": "Dashbord",
+    "logActivity": "Logg aktivitet",
+    "milestones": "Milepæler",
+    "routines": "Rutiner",
+    "insights": "Innsikt",
+    "settings": "Innstillinger"
+  },
   "footer": {
     "privacy": "Personvern",
     "terms": "Vilkår",

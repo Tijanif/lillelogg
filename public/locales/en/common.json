@@ -19,6 +19,14 @@
     "login": "Log In",
     "signup": "Sign Up"
   },
+  "nav": {
+    "dashboard": "Dashboard",
+    "logActivity": "Log Activity",
+    "milestones": "Milestones",
+    "routines": "Routines",
+    "insights": "Insights",
+    "settings": "Settings"
+  },
   "footer": {
     "privacy": "Privacy",
     "terms": "Terms",
