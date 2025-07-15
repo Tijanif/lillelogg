@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { IconType } from 'react-icons';
 import * as FaIcons from 'react-icons/fa';
+import {Button} from "@/components/ui/Button";
+import { signOut } from 'next-auth/react';
 
 
 interface NavItem {
@@ -51,12 +53,18 @@ export function SidebarNav({ navItems, pathname }: SidebarNavProps) {
                 })}
             </nav>
 
-            {/* Logout Button (or user info) at the bottom of the sidebar */}
+            {/* Logout Button (or user info later) at the bottom of the sidebar */}
             <div className="mt-auto pt-4 border-t border-border-light">
-                <Link href="#" className="flex items-center p-3 rounded-lg text-dark-text font-medium hover:bg-border-light">
+                <Button
+                    onClick={() => signOut({ callbackUrl: `/${t('common:locale')}/` })}
+                    variant="ghost"
+                    fullWidth
+                    className="flex items-center justify-start text-dark-text"
+                    size="md"
+                >
                     <FaIcons.FaSignOutAlt className="text-xl mr-3 text-muted-text" />
                     <span>{t('buttons.logout')}</span>
-                </Link>
+                </Button>
             </div>
         </aside>
     );
