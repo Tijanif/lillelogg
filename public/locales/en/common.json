@@ -15,22 +15,42 @@
     "feature3Title": "Family Sharing",
     "feature3Description": "Share access with caregivers and family members for seamless coordination"
   },
-  "buttons": {
-    "login": "Log In",
-    "signup": "Sign Up"
+  "dashboard": {
+    "hiParent": "Hi, {{name}}!",
+    "parent": "Parent",
+    "babyInfo": "Baby: {{name}}, {{age}}",
+    "feedings": "Feedings",
+    "naps": "Naps",
+    "diapers": "Diapers",
+    "minutesAgo": "{{count}} min ago",
+    "hoursAgo": "{{count}} h ago",
+    "daysAgo": "{{count}} d ago",
+    "notLoggedYet": "Not logged yet",
+    "justNow": "Just now",
+    "duration": "{{duration}} min",
+    "addFeeding": "Add Feeding",
+    "addNap": "Add Nap",
+    "dailyTip": "Daily Tip",
+    "noTipToday": "No tip for today. Check back tomorrow!",
+    "upcomingRoutines": "Upcoming Routines",
+    "noRoutines": "No routines scheduled for today."
   },
   "nav": {
-    "dashboard": "Dashboard",
+    "dashboard": "Home",
     "logActivity": "Log Activity",
     "milestones": "Milestones",
     "routines": "Routines",
-    "insights": "Insights",
+    "insights": "Analytics",
     "settings": "Settings"
   },
   "footer": {
     "privacy": "Privacy",
     "terms": "Terms",
     "support": "Support"
+  },
+  "buttons": {
+    "login": "Log In",
+    "signup": "Sign Up"
   },
   "inputs": {
     "emailLabel": "Email",
