@@ -3,21 +3,12 @@
 import { useTranslation } from 'react-i18next';
 import { signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/Button';
-import { FaBaby, FaAppleAlt, FaMoon, FaPlus, FaCalendarAlt } from 'react-icons/fa';
+import { FaBaby, FaMoon, FaPlus, FaCalendarAlt } from 'react-icons/fa';
 import { MdBabyChangingStation } from "react-icons/md";
 import { GiBabyBottle } from "react-icons/gi";
-
-import { IconType } from 'react-icons';
-import * as FaIcons from 'react-icons/fa';
-
 import { DashboardData } from './page';
 
-// Helper to get React Icon component by string name
-const getIcon = (iconName: string): IconType | null => {
-    // @ts-ignore
-    if (FaIcons[iconName]) return FaIcons[iconName] as IconType;
-    return null;
-};
+
 
 export default function DashboardContent({ session, lang, primaryBaby, latestFeedings, latestSleeps, latestDiapers, dailyTip, upcomingRoutines }: DashboardData) {
     const { t } = useTranslation('common');
