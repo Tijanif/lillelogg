@@ -51,7 +51,7 @@ export default function SignUpPage() {
                 }
             } else {
                 setSuccessMessage(t('auth.registrationSuccess'));
-                    router.push(`/${t('common:locale')}/signin`);;
+                    router.push(`/${t('common:locale')}/signin`);
             }
         } catch (err) {
             console.error("Sign up fetch error:", err);
