@@ -3,6 +3,8 @@ import { getToken } from 'next-auth/jwt';
 import prisma from '@/lib/prisma';
 import { createBabySchema } from '@/lib/validations';
 import { UserRole } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
+
 
 export async function POST(request: NextRequest) {
     try {
@@ -56,6 +58,8 @@ export async function POST(request: NextRequest) {
                 }
             }
         });
+
+        revalidatePath('/[lang]/dashboard', 'page');
 
         return NextResponse.json({ baby: newBaby, message: 'Baby profile created successfully' }, { status: 201 });
 
