@@ -1,6 +1,5 @@
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
-import { useTranslation } from 'react-i18next';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import DashboardContent from './dashboard-content';
