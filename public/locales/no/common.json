@@ -43,6 +43,28 @@
     "insights": "Analyse",
     "settings": "Innstillinger"
   },
+  "activityLogging": {
+    "addFeeding": "Legg til mating",
+    "addSleep": "Legg til lur",
+    "addDiaper": "Legg til bleieskift",
+    "feedingTitle": "Loggfør en mating",
+    "sleepTitle": "Loggfør en lur",
+    "diaperTitle": "Loggfør et bleieskift",
+    "type": "Type",
+    "breast": "Bryst",
+    "bottle": "Flaske",
+    "duration": "Varighet (min)",
+    "amount": "Mengde (oz)",
+    "startTime": "Starttid",
+    "endTime": "Sluttid",
+    "notes": "Valgfri merknad...",
+    "save": "Lagre",
+    "diaperTypeWet": "Våt",
+    "diaperTypeDirty": "Skitten",
+    "diaperTypeMixed": "Blandet",
+    "logSuccess": "Aktivitet loggført!",
+    "logError": "Kunne ikke loggføre aktivitet. Prøv igjen."
+  },
   "footer": {
     "privacy": "Personvern",
     "terms": "Vilkår",
