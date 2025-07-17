@@ -341,7 +341,7 @@ model Diaper {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   type        DiaperType
-  time        DateTime
+  startTime   DateTime
   notes       String?            @db.Text
   color       DiaperColor?
   consistency DiaperConsistency?
@@ -349,9 +349,9 @@ model Diaper {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([babyId, time])
-  @@index([userId, time])
-  @@index([babyId, userId, time])
+  @@index([babyId, startTime])
+  @@index([userId, startTime])
+  @@index([babyId, userId, startTime])
 }
 
 model Milestone {
