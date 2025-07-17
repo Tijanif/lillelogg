@@ -82,11 +82,12 @@ export default function DashboardContent({ session, lang, primaryBaby, latestFee
                 <div className="bg-card-background p-4 rounded-2xl shadow-sm">
                     <h3 className="font-bold text-dark-text mb-4">{t('dashboard.addNew')}</h3>
                     <div className="space-y-3">
+                        <Button asChild fullWidth>
                         <Link href="/activity/feeding" passHref>
-                            <Button asChild fullWidth>
+
                                 {t('activityLogging.addFeeding')}
-                            </Button>
                         </Link>
+                        </Button>
                         {/* We will add the others later */}
                     </div>
                 </div>
