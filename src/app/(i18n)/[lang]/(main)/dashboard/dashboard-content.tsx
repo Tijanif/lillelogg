@@ -7,6 +7,7 @@ import { FaBaby, FaMoon, FaPlus, FaCalendarAlt } from 'react-icons/fa';
 import { MdBabyChangingStation } from "react-icons/md";
 import { GiBabyBottle } from "react-icons/gi";
 import { DashboardData } from './page';
+import Link from "next/link";
 
 
 
@@ -66,17 +67,28 @@ export default function DashboardContent({ session, lang, primaryBaby, latestFee
             {/* Activity Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 {/* Feedings Summary */}
-                <div className="bg-card-background p-4 rounded-2xl shadow-sm border border-border-light flex items-center justify-between">
-                    <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full bg-secondary-pink flex items-center justify-center mr-3">
-                            <GiBabyBottle className="text-xl text-dark-text" />
-                        </div>
-                        <div>
-                            <h3 className="text-lg font-medium text-dark-text">{t('dashboard.feedings')}</h3>
-                            <p className="text-muted-text text-sm">{formatLastActivityTime(latestFeedings[0]?.startTime)}</p>
-                        </div>
+                {/*<div className="bg-card-background p-4 rounded-2xl shadow-sm border border-border-light flex items-center justify-between">*/}
+                {/*    <div className="flex items-center">*/}
+                {/*        <div className="w-10 h-10 rounded-full bg-secondary-pink flex items-center justify-center mr-3">*/}
+                {/*            <GiBabyBottle className="text-xl text-dark-text" />*/}
+                {/*        </div>*/}
+                {/*        <div>*/}
+                {/*            <h3 className="text-lg font-medium text-dark-text">{t('dashboard.feedings')}</h3>*/}
+                {/*            <p className="text-muted-text text-sm">{formatLastActivityTime(latestFeedings[0]?.startTime)}</p>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*    <span className="text-xl font-bold text-dark-text">{latestFeedings.length > 0 ? (latestFeedings[0].amount !== null ? latestFeedings[0].amount : '-') : '0'}</span> /!* Handle null amount gracefully *!/*/}
+                {/*</div>*/}
+                <div className="bg-card-background p-4 rounded-2xl shadow-sm">
+                    <h3 className="font-bold text-dark-text mb-4">{t('dashboard.addNew')}</h3>
+                    <div className="space-y-3">
+                        <Link href="/activity/feeding" passHref>
+                            <Button asChild fullWidth>
+                                {t('activityLogging.addFeeding')}
+                            </Button>
+                        </Link>
+                        {/* We will add the others later */}
                     </div>
-                    <span className="text-xl font-bold text-dark-text">{latestFeedings.length > 0 ? (latestFeedings[0].amount !== null ? latestFeedings[0].amount : '-') : '0'}</span> {/* Handle null amount gracefully */}
                 </div>
 
                 {/* Sleep/Naps Summary */}
@@ -101,7 +113,7 @@ export default function DashboardContent({ session, lang, primaryBaby, latestFee
                         </div>
                         <div>
                             <h3 className="text-lg font-medium text-dark-text">{t('dashboard.diapers')}</h3>
-                            <p className="text-muted-text text-sm">{formatLastActivityTime(latestDiapers[0]?.time)}</p>
+                            <p className="text-muted-text text-sm">{formatLastActivityTime(latestDiapers[0]?.startTime)}</p>
                         </div>
                     </div>
                     <span className="text-xl font-bold text-dark-text">{latestDiapers.length > 0 ? latestDiapers[0].type || '-' : '0'}</span>
