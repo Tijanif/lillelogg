@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import {FeedingType, DiaperType} from "@prisma/client";
+import { FeedingType, DiaperType } from "@prisma/client";
 
 // --- User Registration Validation Schema ---
 export const registerSchema = z.object({
@@ -18,16 +18,19 @@ export const createBabySchema = z.object({
     timezone: z.string().optional(),
 });
 
-//--- user logFeeding Validation schema ---
+//--- logFeeding Validation schema ---
 export const logFeedingSchema = z.object({
     babyId: z.string().cuid(),
     userId: z.string().cuid(),
-    startTime: z.coerce.date(),
-    type: z.enum(FeedingType),
-    duration: z.coerce.number().int().positive().optional(),
-    amount: z.coerce.number().positive().optional(), // In oz or ml
-    notes: z.string().max(500).optional(),
+    startTime: z.coerce.date().refine((date) => !isNaN(date.getTime()), {
+        message: "Invalid date and time",
+    }),
+    type: z.nativeEnum(FeedingType),
+    duration: z.coerce.number().int().positive("Duration cannot be negative").optional(),
+    amount: z.coerce.number().positive("Amount cannot be negative").optional(),
+    notes: z.string().max(500, "Notes cannot exceed 500 characters").optional(),
 });
+
 
 // --- Sleep Log Validation Schema ---
 export const logSleepSchema = z.object({
@@ -42,7 +45,7 @@ export const logSleepSchema = z.object({
 export const logDiaperSchema = z.object({
     babyId: z.string().cuid(),
     userId: z.string().cuid(),
-    time: z.coerce.date(),
-    type: z.enum(DiaperType),
+    startTime: z.coerce.date(),
+    type: z.nativeEnum(DiaperType),
     notes: z.string().max(500).optional(),
 });
