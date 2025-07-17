@@ -21,9 +21,10 @@ export const createBabySchema = z.object({
 //--- user logFeeding Validation schema ---
 export const logFeedingSchema = z.object({
     babyId: z.string().cuid(),
-    startTime: z.string().datetime(),
+    userId: z.string().cuid(),
+    startTime: z.coerce.date(),
     type: z.enum(FeedingType),
-    duration: z.coerce.number().int().positive().optional(), // In minutes
+    duration: z.coerce.number().int().positive().optional(),
     amount: z.coerce.number().positive().optional(), // In oz or ml
     notes: z.string().max(500).optional(),
 });
@@ -31,15 +32,17 @@ export const logFeedingSchema = z.object({
 // --- Sleep Log Validation Schema ---
 export const logSleepSchema = z.object({
     babyId: z.string().cuid(),
-    startTime: z.string().datetime(),
-    endTime: z.string().datetime(),
+    userId: z.string().cuid(),
+    startTime: z.coerce.date(),
+    endTime: z.coerce.date(),
     notes: z.string().max(500).optional(),
 });
 
 // --- Diaper Change Log Validation Schema ---
 export const logDiaperSchema = z.object({
     babyId: z.string().cuid(),
-    startTime: z.string().datetime(),
+    userId: z.string().cuid(),
+    time: z.coerce.date(),
     type: z.enum(DiaperType),
     notes: z.string().max(500).optional(),
 });
