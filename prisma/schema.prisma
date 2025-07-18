@@ -299,11 +299,11 @@ model Feeding {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   type      FeedingType
+  duration  Float?
   amount    Float?
   unit      MeasurementUnit?
   startTime DateTime
-  endTime   DateTime?
-  notes     String?          @db.Text
+  notes     String?          @db.Text // This should be fine, but let's confirm Prisma likes it now
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

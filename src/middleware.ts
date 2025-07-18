@@ -23,9 +23,9 @@ function getPreferredLocale(request: NextRequest) {
     const browserLocales = acceptLanguageHeader
         ? acceptLanguageHeader.split(',').map(lang => lang.split(';')[0]) : [];
 
-    for(const land of browserLocales){
-        if (i18n.locales.includes(land)) {
-            return land;
+    for(const lang of browserLocales){
+        if (i18n.locales.includes(lang)) {
+            return lang;
         }
     }
 }

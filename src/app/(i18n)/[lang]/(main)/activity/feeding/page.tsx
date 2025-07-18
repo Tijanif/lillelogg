@@ -16,7 +16,7 @@ export default async function AddFeedingPage({ params: { lang } }: { params: { l
         <div className="flex flex-col h-full bg-light-background">
             <Header title={t('activityLogging.feedingTitle')} />
             <main className="flex-grow p-6 overflow-y-auto">
-                <FeedingForm tAction={t} />
+                <FeedingForm />
             </main>
         </div>
     );

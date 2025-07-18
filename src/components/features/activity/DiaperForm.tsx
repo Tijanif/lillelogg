@@ -4,17 +4,17 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useTranslation } from 'react-i18next';
-import { logFeedingSchema } from '@/lib/validations';
-import { FeedingType } from '@prisma/client';
+import { logDiaperSchema } from '@/lib/validations';
+import { DiaperType } from '@prisma/client';
 import { z } from 'zod';
 
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { SegmentedControl, SegmentedControlItem } from '@/components/ui/SegmentedControl';
 import { Textarea } from '@/components/ui/Textarea';
+import {useTranslation} from "react-i18next";
 
-type FormData = z.input<typeof logFeedingSchema>;
+type FormData = z.input<typeof logDiaperSchema>;
 
 
 function getLocalDateTimeString(date = new Date()): string {
@@ -24,7 +24,7 @@ function getLocalDateTimeString(date = new Date()): string {
     )}:${pad(date.getMinutes())}`;
 }
 
-export function FeedingForm() { //
+export function DiaperForm() {
     const { t } = useTranslation('common');
     const router = useRouter();
     const [apiError, setApiError] = useState<string | null>(null);
@@ -36,12 +36,10 @@ export function FeedingForm() { //
         watch,
         formState: { errors, isSubmitting },
     } = useForm<FormData>({
-        resolver: zodResolver(logFeedingSchema),
+        resolver: zodResolver(logDiaperSchema),
         defaultValues: {
             startTime: new Date(),
-            type: FeedingType.BREAST_LEFT,
-            duration: undefined,
-            amount: undefined,
+            type: DiaperType.WET,
             notes: '',
         },
         mode: 'onBlur',
@@ -58,28 +56,22 @@ export function FeedingForm() { //
     };
 
     const handleTypeChange = (value: string) => {
-        if (Object.values(FeedingType).includes(value as FeedingType)) {
-            setValue('type', value as FeedingType, { shouldValidate: true });
+        if (Object.values(DiaperType).includes(value as DiaperType)) {
+            setValue('type', value as DiaperType, { shouldValidate: true });
         }
     };
 
     const onSubmit = async (data: FormData) => {
         setApiError(null);
-
         try {
-            const startTimeForApi = data.startTime as Date; // Should be Date type now
-            const utcDate = new Date(startTimeForApi);
-
-
-            const response = await fetch('/api/feeding', {
+            const response = await fetch('/api/diaper', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     ...data,
-                    startTime: utcDate.toISOString(),
+                    startTime: (data.startTime as Date).toISOString(),
                 }),
             });
-
 
             if (!response.ok) {
                 const errorBody = await response.text();
@@ -98,20 +90,16 @@ export function FeedingForm() { //
             router.push('/dashboard');
             router.refresh();
         } catch (error: any) {
+            console.error('Failed to log diaper:', error);
             setApiError(error.message || t('activityLogging.logError'));
         }
     };
 
-
     return (
-        <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="space-y-6"
-            method="POST"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6"  method="POST">
             <div className="flex justify-center mb-6">
-                <div className="w-24 h-24 bg-secondary-pink rounded-full flex items-center justify-center">
-                    {/* Baby avatar/icon placeholder */}
+                <div className="w-24 h-24 bg-secondary-gray-accent rounded-full flex items-center justify-center">
+                    {/* Diaper icon placeholder */}
                 </div>
             </div>
 
@@ -120,11 +108,14 @@ export function FeedingForm() { //
                 onValueChange={handleTypeChange}
                 type="single"
             >
-                <SegmentedControlItem value={FeedingType.BREAST_LEFT}>
-                    {t('activityLogging.feedingTypeBreastLeft')}
+                <SegmentedControlItem value={DiaperType.WET}>
+                    {t('activityLogging.diaperTypeWet')}
                 </SegmentedControlItem>
-                <SegmentedControlItem value={FeedingType.BOTTLE_FORMULA}>
-                    {t('activityLogging.feedingTypeBottleFormula')}
+                <SegmentedControlItem value={DiaperType.DIRTY}>
+                    {t('activityLogging.diaperTypeDirty')}
+                </SegmentedControlItem>
+                <SegmentedControlItem value={DiaperType.MIXED}>
+                    {t('activityLogging.diaperTypeMixed')}
                 </SegmentedControlItem>
             </SegmentedControl>
 
@@ -146,25 +137,13 @@ export function FeedingForm() { //
                 </Button>
             </div>
 
-            <Input
-                label={t('activityLogging.duration')}
-                type="number"
-                {...register('duration', { valueAsNumber: true })}
-                error={errors.duration?.message}
-            />
-            <Input
-                label={t('activityLogging.amount')}
-                type="number"
-                step="0.1"
-                {...register('amount', { valueAsNumber: true })}
-                error={errors.amount?.message}
-            />
             <Textarea
                 label={t('activityLogging.notes')}
                 placeholder={t('activityLogging.notes_placeholder')}
                 {...register('notes')}
                 error={errors.notes?.message}
             />
+
             <Button type="submit" fullWidth size="lg" isLoading={isSubmitting} className="mt-8">
                 {t('activityLogging.save')}
             </Button>

@@ -4,17 +4,15 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useTranslation } from 'react-i18next';
-import { logFeedingSchema } from '@/lib/validations';
-import { FeedingType } from '@prisma/client';
+import { logSleepSchema } from '@/lib/validations';
 import { z } from 'zod';
 
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
-import { SegmentedControl, SegmentedControlItem } from '@/components/ui/SegmentedControl';
 import { Textarea } from '@/components/ui/Textarea';
+import {useTranslation} from "react-i18next";
 
-type FormData = z.input<typeof logFeedingSchema>;
+type FormData = z.input<typeof logSleepSchema>;
 
 
 function getLocalDateTimeString(date = new Date()): string {
@@ -24,7 +22,7 @@ function getLocalDateTimeString(date = new Date()): string {
     )}:${pad(date.getMinutes())}`;
 }
 
-export function FeedingForm() { //
+export function SleepForm() {
     const { t } = useTranslation('common');
     const router = useRouter();
     const [apiError, setApiError] = useState<string | null>(null);
@@ -36,50 +34,42 @@ export function FeedingForm() { //
         watch,
         formState: { errors, isSubmitting },
     } = useForm<FormData>({
-        resolver: zodResolver(logFeedingSchema),
+        resolver: zodResolver(logSleepSchema),
         defaultValues: {
             startTime: new Date(),
-            type: FeedingType.BREAST_LEFT,
-            duration: undefined,
-            amount: undefined,
+            endTime: new Date(),
             notes: '',
         },
         mode: 'onBlur',
     });
 
     const watchedStartTime = watch('startTime') as Date;
+    const watchedEndTime = watch('endTime') as Date;
 
     const handleStartTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue('startTime', new Date(e.target.value), { shouldValidate: true });
     };
 
-    const handleSetToNow = () => {
-        setValue('startTime', new Date(), { shouldValidate: true });
+    const handleEndTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setValue('endTime', new Date(e.target.value), { shouldValidate: true });
     };
 
-    const handleTypeChange = (value: string) => {
-        if (Object.values(FeedingType).includes(value as FeedingType)) {
-            setValue('type', value as FeedingType, { shouldValidate: true });
-        }
+    const handleSetToNow = (field: 'startTime' | 'endTime') => {
+        setValue(field, new Date(), { shouldValidate: true });
     };
 
     const onSubmit = async (data: FormData) => {
         setApiError(null);
-
         try {
-            const startTimeForApi = data.startTime as Date; // Should be Date type now
-            const utcDate = new Date(startTimeForApi);
-
-
-            const response = await fetch('/api/feeding', {
+            const response = await fetch('/api/sleep', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     ...data,
-                    startTime: utcDate.toISOString(),
+                    startTime: (data.startTime as Date).toISOString(),
+                    endTime: (data.endTime as Date).toISOString(),
                 }),
             });
-
 
             if (!response.ok) {
                 const errorBody = await response.text();
@@ -98,35 +88,18 @@ export function FeedingForm() { //
             router.push('/dashboard');
             router.refresh();
         } catch (error: any) {
+            console.error('Failed to log sleep:', error);
             setApiError(error.message || t('activityLogging.logError'));
         }
     };
 
-
     return (
-        <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="space-y-6"
-            method="POST"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6"  method="POST">
             <div className="flex justify-center mb-6">
-                <div className="w-24 h-24 bg-secondary-pink rounded-full flex items-center justify-center">
-                    {/* Baby avatar/icon placeholder */}
+                <div className="w-24 h-24 bg-secondary-blue-accent rounded-full flex items-center justify-center">
+                    {/* Sleep icon placeholder */}
                 </div>
             </div>
-
-            <SegmentedControl
-                value={watch('type')}
-                onValueChange={handleTypeChange}
-                type="single"
-            >
-                <SegmentedControlItem value={FeedingType.BREAST_LEFT}>
-                    {t('activityLogging.feedingTypeBreastLeft')}
-                </SegmentedControlItem>
-                <SegmentedControlItem value={FeedingType.BOTTLE_FORMULA}>
-                    {t('activityLogging.feedingTypeBottleFormula')}
-                </SegmentedControlItem>
-            </SegmentedControl>
 
             <div className="flex gap-4 items-end">
                 <Input
@@ -140,31 +113,37 @@ export function FeedingForm() { //
                     type="button"
                     variant="secondary-outline"
                     size="sm"
-                    onClick={handleSetToNow}
+                    onClick={() => handleSetToNow('startTime')}
                 >
                     {t('activityLogging.setToNow') ?? 'Now'}
                 </Button>
             </div>
 
-            <Input
-                label={t('activityLogging.duration')}
-                type="number"
-                {...register('duration', { valueAsNumber: true })}
-                error={errors.duration?.message}
-            />
-            <Input
-                label={t('activityLogging.amount')}
-                type="number"
-                step="0.1"
-                {...register('amount', { valueAsNumber: true })}
-                error={errors.amount?.message}
-            />
+            <div className="flex gap-4 items-end">
+                <Input
+                    label={t('activityLogging.endTime')}
+                    type="datetime-local"
+                    value={getLocalDateTimeString(watchedEndTime)}
+                    onChange={handleEndTimeChange}
+                    error={errors.endTime?.message}
+                />
+                <Button
+                    type="button"
+                    variant="secondary-outline"
+                    size="sm"
+                    onClick={() => handleSetToNow('endTime')}
+                >
+                    {t('activityLogging.setToNow') ?? 'Now'}
+                </Button>
+            </div>
+
             <Textarea
                 label={t('activityLogging.notes')}
                 placeholder={t('activityLogging.notes_placeholder')}
                 {...register('notes')}
                 error={errors.notes?.message}
             />
+
             <Button type="submit" fullWidth size="lg" isLoading={isSubmitting} className="mt-8">
                 {t('activityLogging.save')}
             </Button>

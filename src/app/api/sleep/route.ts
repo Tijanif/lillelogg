@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { revalidatePath } from 'next/cache';
 import prisma from '@/lib/prisma';
-import { logSleepSchema } from '@/lib/validations';
+import {apiLogSleepSchema} from '@/lib/validations';
 import { getPrimaryBaby } from '@/lib/baby';
-import {z} from "zod"; // We will create this helper next
+import {z} from "zod";
 
 export async function POST(req: NextRequest) {
     const token = await getToken({ req });
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
         }
 
         const body = await req.json();
-        const validatedData = logSleepSchema.parse({
+        const validatedData = apiLogSleepSchema.parse({
             ...body,
             babyId: primaryBaby.id,
             userId: token.id,
@@ -29,13 +29,11 @@ export async function POST(req: NextRequest) {
             data: validatedData,
         });
 
-        // Revalidate dashboard path to show new data
         revalidatePath('/dashboard', 'layout');
 
         return new NextResponse('Feeding logged successfully', { status: 201 });
     } catch (error) {
         console.error('Failed to log feeding:', error);
-        // Handle Zod validation errors specifically
         if (error instanceof z.ZodError) {
             return new NextResponse(JSON.stringify(error.issues), { status: 400 });
         }

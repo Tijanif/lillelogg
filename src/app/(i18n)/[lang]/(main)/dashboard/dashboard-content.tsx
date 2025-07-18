@@ -10,11 +10,9 @@ import { DashboardData } from './page';
 import Link from "next/link";
 
 
-
 export default function DashboardContent({ session, lang, primaryBaby, latestFeedings, latestSleeps, latestDiapers, dailyTip, upcomingRoutines }: DashboardData) {
     const { t } = useTranslation('common');
 
-    // Helper to format last activity time
     const formatLastActivityTime = (date: Date | null | undefined): string => {
         if (!date) return t('dashboard.notLoggedYet');
 
@@ -67,29 +65,20 @@ export default function DashboardContent({ session, lang, primaryBaby, latestFee
             {/* Activity Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 {/* Feedings Summary */}
-                {/*<div className="bg-card-background p-4 rounded-2xl shadow-sm border border-border-light flex items-center justify-between">*/}
-                {/*    <div className="flex items-center">*/}
-                {/*        <div className="w-10 h-10 rounded-full bg-secondary-pink flex items-center justify-center mr-3">*/}
-                {/*            <GiBabyBottle className="text-xl text-dark-text" />*/}
-                {/*        </div>*/}
-                {/*        <div>*/}
-                {/*            <h3 className="text-lg font-medium text-dark-text">{t('dashboard.feedings')}</h3>*/}
-                {/*            <p className="text-muted-text text-sm">{formatLastActivityTime(latestFeedings[0]?.startTime)}</p>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*    <span className="text-xl font-bold text-dark-text">{latestFeedings.length > 0 ? (latestFeedings[0].amount !== null ? latestFeedings[0].amount : '-') : '0'}</span> /!* Handle null amount gracefully *!/*/}
-                {/*</div>*/}
-                <div className="bg-card-background p-4 rounded-2xl shadow-sm">
-                    <h3 className="font-bold text-dark-text mb-4">{t('dashboard.addNew')}</h3>
-                    <div className="space-y-3">
-                        <Button asChild fullWidth>
-                        <Link href="/activity/feeding" passHref>
-
-                                {t('activityLogging.addFeeding')}
-                        </Link>
-                        </Button>
-                        {/* We will add the others later */}
+                {/* Re-add this section when we have data to display */}
+                <div className="bg-card-background p-4 rounded-2xl shadow-sm border border-border-light flex items-center justify-between">
+                    <div className="flex items-center">
+                        <div className="w-10 h-10 rounded-full bg-secondary-pink flex items-center justify-center mr-3">
+                            <GiBabyBottle className="text-xl text-dark-text" />
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-medium text-dark-text">{t('dashboard.feedings')}</h3>
+                            <p className="text-muted-text text-sm">{formatLastActivityTime(latestFeedings[0]?.startTime)}</p>
+                        </div>
                     </div>
+                    <span className="text-xl font-bold text-dark-text">
+                        {latestFeedings.length > 0 ? (latestFeedings[0].amount !== null && latestFeedings[0].amount !== undefined ? latestFeedings[0].amount : '-') : '0'}
+                    </span>
                 </div>
 
                 {/* Sleep/Naps Summary */}
@@ -121,15 +110,29 @@ export default function DashboardContent({ session, lang, primaryBaby, latestFee
                 </div>
             </div>
 
-            {/* Add Activity Buttons */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <Button fullWidth variant="secondary-outline" size="lg" className="flex items-center justify-center">
-                    <FaPlus className="mr-2 text-xl" /> {t('dashboard.addFeeding')}
-                </Button>
-                <Button fullWidth variant="secondary-outline" size="lg" className="flex items-center justify-center">
-                    <FaPlus className="mr-2 text-xl" /> {t('dashboard.addNap')}
-                </Button>
-                {/* Add more buttons for Diaper, Growth, Milestone etc. */}
+            {/* Add Activity Buttons (consolidated and linked) */}
+            <div className="bg-card-background p-4 rounded-2xl shadow-sm mb-6 border border-border-light">
+                <h3 className="font-bold text-dark-text mb-4">{t('dashboard.addNew')}</h3>
+                <div className="space-y-3">
+                    <Button asChild fullWidth>
+                        <Link href={`/${lang}/activity/feeding`}>
+                            <GiBabyBottle className="mr-2 text-xl text-primary-blue" /> {/* Add icon here for consistency */}
+                            {t('activityLogging.addFeeding')}
+                        </Link>
+                    </Button>
+                    <Button asChild fullWidth>
+                        <Link href={`/${lang}/activity/sleep`}>
+                            <FaMoon className="mr-2 text-xl text-primary-blue" />
+                            {t('activityLogging.addSleep')}
+                        </Link>
+                    </Button>
+                    <Button asChild fullWidth>
+                        <Link href={`/${lang}/activity/diaper`}>
+                            <MdBabyChangingStation className="mr-2 text-xl text-primary-blue" />
+                            {t('activityLogging.addDiaper')}
+                        </Link>
+                    </Button>
+                </div>
             </div>
 
             {/* Daily Tip Card */}

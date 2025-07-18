@@ -1,6 +1,5 @@
 import { createInstance } from 'i18next';
 import resourcesToBackend from 'i18next-resources-to-backend';
-import { initReactI18next } from 'react-i18next';
 
 
 
@@ -10,7 +9,6 @@ const defaultNS = 'common';
 export async function createTranslation(locale: string, ns: string | string[] = defaultNS) {
     const i18nInstance = createInstance();
     await i18nInstance
-        .use(initReactI18next)
         .use(resourcesToBackend((language: string, namespace: string) => import(`../../public/locales/${language}/${namespace}.json`)))
         .init({
             lng: locale,
@@ -19,9 +17,6 @@ export async function createTranslation(locale: string, ns: string | string[] = 
             ns: ns,
             defaultNS: defaultNS,
             debug: false,
-            react: {
-                useSuspense: false,
-            },
         });
 
     return {

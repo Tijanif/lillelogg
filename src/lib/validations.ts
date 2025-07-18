@@ -1,6 +1,10 @@
 import { z } from 'zod';
 import { FeedingType, DiaperType } from "@prisma/client";
 
+const FeedingTypeEnum = Object.values(FeedingType) as [string, ...string[]];
+const DiaperTypeEnum = Object.values(DiaperType) as [string, ...string[]];
+
+
 // --- User Registration Validation Schema ---
 export const registerSchema = z.object({
     email: z.string().email('Invalid email address').min(1, 'Email is required'),
@@ -20,32 +24,40 @@ export const createBabySchema = z.object({
 
 //--- logFeeding Validation schema ---
 export const logFeedingSchema = z.object({
-    babyId: z.string().cuid(),
-    userId: z.string().cuid(),
     startTime: z.coerce.date().refine((date) => !isNaN(date.getTime()), {
         message: "Invalid date and time",
     }),
-    type: z.nativeEnum(FeedingType),
+    type: z.enum(FeedingTypeEnum),
     duration: z.coerce.number().int().positive("Duration cannot be negative").optional(),
     amount: z.coerce.number().positive("Amount cannot be negative").optional(),
     notes: z.string().max(500, "Notes cannot exceed 500 characters").optional(),
 });
 
+export const apiLogFeedingSchema = logFeedingSchema.extend({
+    babyId: z.string().cuid(),
+    userId: z.string().cuid(),
+});
+
 
 // --- Sleep Log Validation Schema ---
 export const logSleepSchema = z.object({
-    babyId: z.string().cuid(),
-    userId: z.string().cuid(),
     startTime: z.coerce.date(),
     endTime: z.coerce.date(),
     notes: z.string().max(500).optional(),
 });
+export const apiLogSleepSchema = logSleepSchema.extend({
+    babyId: z.string().cuid(),
+    userId: z.string().cuid(),
+});
 
 // --- Diaper Change Log Validation Schema ---
 export const logDiaperSchema = z.object({
+    startTime: z.coerce.date(),
+    type: z.enum(DiaperTypeEnum),
+    notes: z.string().max(500).optional(),
+});
+
+export const apiLogDiaperSchema = logDiaperSchema.extend({
     babyId: z.string().cuid(),
     userId: z.string().cuid(),
-    startTime: z.coerce.date(),
-    type: z.nativeEnum(DiaperType),
-    notes: z.string().max(500).optional(),
 });

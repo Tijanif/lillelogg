@@ -59,7 +59,7 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
 
         prisma.diaper.findMany({
             where: { baby: { userId: userId, isDeleted: false } },
-            orderBy: { time: 'desc' },
+            orderBy: { startTime: 'desc' },
             take: 1,
             include: { baby: true }
         }),
