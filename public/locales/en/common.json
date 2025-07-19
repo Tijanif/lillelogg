@@ -26,6 +26,8 @@
     "hoursAndMinutes": "{{hours}}h {{minutes}}m",
     "hours": "{{hours}}h",
     "minutes": "{{minutes}}m",
+    "invalidDuration": "Invalid duration",
+    "lessThanOneMinute": "<1m",
     "diapers": "Diapers",
     "addDiaper": "Add Diaper",
     "minutesAgo": "{{count}} min ago",

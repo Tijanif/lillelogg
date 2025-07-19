@@ -26,6 +26,8 @@
     "hoursAndMinutes": "{{hours}}t {{minutes}}m",
     "hours": "{{hours}}t",
     "minutes": "{{minutes}}m",
+    "invalidDuration": "Ugyldig varighet",
+    "lessThanOneMinute": "<1m",
     "diapers": "Bleier",
     "addDiaper": "Legg til bleie",
     "minutesAgo": "{{count}} minutter siden",
