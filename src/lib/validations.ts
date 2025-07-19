@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import { FeedingType, DiaperType } from "@prisma/client";
+import { FeedingType, DiaperType, SleepLocation, DiaperColor, DiaperConsistency } from "@prisma/client";
 
 const FeedingTypeEnum = Object.values(FeedingType) as [string, ...string[]];
-const DiaperTypeEnum = Object.values(DiaperType) as [string, ...string[]];
+// const DiaperTypeEnum = Object.values(DiaperType) as [string, ...string[]];
 
 
 // --- User Registration Validation Schema ---
@@ -43,6 +43,7 @@ export const apiLogFeedingSchema = logFeedingSchema.extend({
 export const logSleepSchema = z.object({
     startTime: z.coerce.date(),
     endTime: z.coerce.date(),
+    location: z.nativeEnum(SleepLocation).optional(),
     notes: z.string().max(500).optional(),
 });
 export const apiLogSleepSchema = logSleepSchema.extend({
@@ -53,7 +54,7 @@ export const apiLogSleepSchema = logSleepSchema.extend({
 // --- Diaper Change Log Validation Schema ---
 export const logDiaperSchema = z.object({
     startTime: z.coerce.date(),
-    type: z.enum(DiaperTypeEnum),
+    type: z.nativeEnum(DiaperType),
     notes: z.string().max(500).optional(),
 });
 
