@@ -6,11 +6,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { logSleepSchema } from '@/lib/validations';
 import { z } from 'zod';
+import { SleepLocation } from "@prisma/client";
 
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Textarea } from '@/components/ui/Textarea';
 import {useTranslation} from "react-i18next";
+import { SegmentedControl, SegmentedControlItem } from '@/components/ui/SegmentedControl'
 
 type FormData = z.input<typeof logSleepSchema>;
 
@@ -38,6 +40,7 @@ export function SleepForm() {
         defaultValues: {
             startTime: new Date(),
             endTime: new Date(),
+            location: SleepLocation.BED,
             notes: '',
         },
         mode: 'onBlur',
@@ -45,6 +48,7 @@ export function SleepForm() {
 
     const watchedStartTime = watch('startTime') as Date;
     const watchedEndTime = watch('endTime') as Date;
+    const watchedLocation = watch('location') as SleepLocation | undefined;
 
     const handleStartTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue('startTime', new Date(e.target.value), { shouldValidate: true });
@@ -58,6 +62,14 @@ export function SleepForm() {
         setValue(field, new Date(), { shouldValidate: true });
     };
 
+    const handleLocationChange = (value: string) => {
+        if (Object.values(SleepLocation).includes(value as SleepLocation)) {
+            setValue('location', value as SleepLocation, { shouldValidate: true });
+        } else {
+            setValue('location', undefined, { shouldValidate: true }); // Set to undefined if "Other" or not found
+        }
+    };
+
     const onSubmit = async (data: FormData) => {
         setApiError(null);
         try {
@@ -68,6 +80,8 @@ export function SleepForm() {
                     ...data,
                     startTime: (data.startTime as Date).toISOString(),
                     endTime: (data.endTime as Date).toISOString(),
+                    location: data.location ?? null,
+                    notes: data.notes ?? null,
                 }),
             });
 
@@ -93,8 +107,13 @@ export function SleepForm() {
         }
     };
 
+    const onErrors = (errors: any) => {
+        console.error('--- Form validation errors (onErrors callback) ---', errors);
+        setApiError(t('activityLogging.logError'));
+    };
+
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6"  method="POST">
+        <form onSubmit={handleSubmit(onSubmit, onErrors)} className="space-y-6"  method="POST">
             <div className="flex justify-center mb-6">
                 <div className="w-24 h-24 bg-secondary-blue-accent rounded-full flex items-center justify-center">
                     {/* Sleep icon placeholder */}
@@ -136,6 +155,18 @@ export function SleepForm() {
                     {t('activityLogging.setToNow') ?? 'Now'}
                 </Button>
             </div>
+            <h3 className="text-sm font-medium text-dark-text">{t('activityLogging.sleepLocation')}</h3>
+            <SegmentedControl
+                value={watchedLocation ?? ''} // Provide a fallback for uncontrolled component
+                onValueChange={handleLocationChange}
+                type="single"
+            >
+                {Object.values(SleepLocation).map((loc) => (
+                    <SegmentedControlItem key={loc} value={loc}>
+                        {t(`activityLogging.sleepLocation${loc}`)}
+                    </SegmentedControlItem>
+                ))}
+            </SegmentedControl>
 
             <Textarea
                 label={t('activityLogging.notes')}
