@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { revalidatePath } from 'next/cache';
-import prisma from '@/lib/prisma';
 import {apiLogSleepSchema} from '@/lib/validations';
 import { getPrimaryBaby } from '@/lib/baby';
 import {z} from "zod";
+import prisma from "@/lib/prisma";
+import { Prisma } from '@prisma/client';
+
 
 export async function POST(req: NextRequest) {
     const token = await getToken({ req });
@@ -26,7 +28,7 @@ export async function POST(req: NextRequest) {
         });
 
         await prisma.sleep.create({
-            data: validatedData,
+            data: validatedData as Prisma.SleepUncheckedCreateInput,
         });
 
         revalidatePath('/dashboard', 'layout');
