@@ -3,17 +3,18 @@ import { redirect } from 'next/navigation';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import DashboardContent from './dashboard-content';
-import { Baby, Feeding, Sleep, Diaper, Routine, Tip } from '@prisma/client';
+import { Baby, Feeding, Sleep, Diaper, Routine, Tip, Session } from '@prisma/client'; // Import Session type
 
 export interface DashboardData {
     session: Awaited<ReturnType<typeof getServerSession>>;
     lang: string;
     primaryBaby: Baby | null;
-    latestFeedings: (Feeding & { baby: Baby })[];
-    latestSleeps: (Sleep & { baby: Baby })[];
-    latestDiapers: (Diaper & { baby: Baby })[];
+    latestFeedings: Feeding[];
+    latestSleeps: Sleep[];
+    latestDiapers: Diaper[];
+    totalSleepCount: number;
     dailyTip: Tip | null;
-    upcomingRoutines: (Routine & { baby: Baby })[];
+    upcomingRoutines: Routine[];
 }
 
 interface DashboardPageProps {
@@ -29,42 +30,53 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
     if (!userId) {
         throw redirect(`/${lang}/signin?callbackUrl=/${lang}/dashboard`);
     }
+    const primaryBaby = await prisma.baby.findFirst({
+        where: { userId: userId, isDeleted: false },
+        orderBy: { createdAt: 'asc' },
+        include: {
+            memberships: {
+                select: { role: true, userId: true }
+            }
+        }
+    });
+
+    if (!primaryBaby) {
+        throw redirect(`/${lang}/onboarding/baby`);
+    }
 
     // --- Data Fetching ---
-    const [primaryBaby, latestFeedings, latestSleeps, latestDiapers, dailyTip, upcomingRoutines] = await Promise.all([
-        prisma.baby.findFirst({
-            where: { userId: userId, isDeleted: false },
-            orderBy: { createdAt: 'asc' },
-            include: {
-                memberships: {
-                    select: { role: true, userId: true }
-                }
-            }
-        }),
+    const [
+        latestFeedings,
+        latestSleeps,
+        latestDiapers,
+        totalSleepCount,
+        dailyTip,
+        upcomingRoutines
+    ] = await Promise.all([
 
-        // 2. Fetch Latest Activities for the primary baby
         prisma.feeding.findMany({
-            where: { baby: { userId: userId, isDeleted: false } },
+            where: { babyId: primaryBaby.id, userId: userId },
             orderBy: { startTime: 'desc' },
             take: 1,
-            include: { baby: true }
         }),
 
         prisma.sleep.findMany({
-            where: { baby: { userId: userId, isDeleted: false } },
+            where: { babyId: primaryBaby.id, userId: userId },
             orderBy: { startTime: 'desc' },
             take: 1,
-            include: { baby: true }
         }),
 
         prisma.diaper.findMany({
-            where: { baby: { userId: userId, isDeleted: false } },
+            where: { babyId: primaryBaby.id, userId: userId },
             orderBy: { startTime: 'desc' },
             take: 1,
-            include: { baby: true }
         }),
 
-        // 3. Fetch a Daily Tip
+        // FIX: New count query
+        prisma.sleep.count({
+            where: { babyId: primaryBaby.id, userId: userId },
+        }),
+
         prisma.tip.findFirst({
             where: {
                 language: lang === 'no' ? 'NO' : 'EN',
@@ -72,10 +84,10 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
             orderBy: { priority: 'desc' },
         }),
 
-        // 4. Fetch Upcoming Routines for today
         prisma.routine.findMany({
             where: {
-                baby: { userId: userId, isDeleted: false },
+                babyId: primaryBaby.id,
+                userId: userId,
                 isActive: true,
                 OR: [
                     { daysOfWeek: { has: new Date().toLocaleString('en-US', { weekday: 'short' }).toUpperCase() } },
@@ -84,16 +96,11 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
             },
             orderBy: { startTimeStr: 'asc' },
             take: 3,
-            include: { baby: true }
         })
     ]);
     // --- End Data Fetching ---
 
 
-    // Baby count check to determine if user needs onboarding (based on primaryBaby result)
-    if (!primaryBaby) {
-        throw redirect(`/${lang}/onboarding/baby`);
-    }
 
     const dashboardData: DashboardData = {
         session,
@@ -102,6 +109,7 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
         latestFeedings,
         latestSleeps,
         latestDiapers,
+        totalSleepCount,
         dailyTip,
         upcomingRoutines,
     };
