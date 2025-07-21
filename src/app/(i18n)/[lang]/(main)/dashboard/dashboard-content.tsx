@@ -1,3 +1,4 @@
+// src/app/(i18n)/[lang]/(main)/dashboard/dashboard-content.tsx
 'use client';
 
 import { useTranslation } from 'react-i18next';
@@ -8,11 +9,13 @@ import { MdBabyChangingStation } from "react-icons/md";
 import { GiBabyBottle } from "react-icons/gi";
 import { DashboardData } from './page';
 import Link from "next/link";
+import { Feeding, Sleep, Diaper } from '@prisma/client';
 
 
-export default function DashboardContent({ session, lang, primaryBaby, latestFeedings, latestSleeps, latestDiapers, dailyTip, upcomingRoutines }: DashboardData) {
+export default function DashboardContent({ session, lang, primaryBaby, latestFeedings, latestSleeps, latestDiapers, totalSleepCount, dailyTip, upcomingRoutines }: DashboardData) {
     const { t } = useTranslation('common');
 
+    // Helper to format last activity time
     const formatLastActivityTime = (date: Date | null | undefined): string => {
         if (!date) return t('dashboard.notLoggedYet');
 
@@ -23,7 +26,7 @@ export default function DashboardContent({ session, lang, primaryBaby, latestFee
         const diffMinutes = Math.floor(diffMs / (1000 * 60));
 
         if (diffMinutes < 0) {
-            return t('dashboard.justNow'); // Add this key to common.json
+            return t('dashboard.justNow');
         }
         if (diffMinutes === 0) return t('dashboard.justNow');
         if (diffMinutes < 60) return t('dashboard.minutesAgo', { count: diffMinutes });
@@ -32,6 +35,34 @@ export default function DashboardContent({ session, lang, primaryBaby, latestFee
         const diffDays = Math.floor(diffHours / 24);
         return t('dashboard.daysAgo', { count: diffDays });
     };
+
+    const formatSleepDuration = (sleep: Sleep | null | undefined): string => {
+        if (!sleep || !sleep.startTime || !sleep.endTime) {
+            return t('dashboard.notLoggedYet'); // Or a specific 'no duration' message
+        }
+
+        const durationMinutes = Math.floor((sleep.endTime.getTime() - sleep.startTime.getTime()) / (1000 * 60));
+
+        if (durationMinutes < 0) {
+            return t('dashboard.invalidDuration'); // If end time is before start time, it's invalid
+        }
+        if (durationMinutes === 0) {
+            return t('dashboard.lessThanOneMinute'); // For durations less than a minute
+        }
+
+        const hours = Math.floor(durationMinutes / 60);
+        const minutes = durationMinutes % 60;
+
+        if (hours > 0 && minutes > 0) {
+            return t('dashboard.hoursAndMinutes', { hours, minutes });
+        } else if (hours > 0) {
+            return t('dashboard.hours', { hours });
+        } else {
+            return t('dashboard.minutes', { minutes });
+        }
+    };
+
+    const latestSleepEntry = latestSleeps[0]; // This will be the single latest sleep
 
     return (
         <main className="flex-1 p-4 md:p-8 overflow-y-auto">
@@ -65,7 +96,6 @@ export default function DashboardContent({ session, lang, primaryBaby, latestFee
             {/* Activity Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 {/* Feedings Summary */}
-                {/* Re-add this section when we have data to display */}
                 <div className="bg-card-background p-4 rounded-2xl shadow-sm border border-border-light flex items-center justify-between">
                     <div className="flex items-center">
                         <div className="w-10 h-10 rounded-full bg-secondary-pink flex items-center justify-center mr-3">
@@ -77,7 +107,8 @@ export default function DashboardContent({ session, lang, primaryBaby, latestFee
                         </div>
                     </div>
                     <span className="text-xl font-bold text-dark-text">
-                        {latestFeedings.length > 0 ? (latestFeedings[0].amount !== null && latestFeedings[0].amount !== undefined ? latestFeedings[0].amount : '-') : '0'}
+                        {/* Display count of latestFeedings if available, otherwise just amount for latest */}
+                        {latestFeedings.length > 0 ? (latestFeedings[0].amount !== null && latestFeedings[0].amount !== undefined ? `${latestFeedings[0].amount} oz` : '-') : '0'}
                     </span>
                 </div>
 
@@ -89,10 +120,13 @@ export default function DashboardContent({ session, lang, primaryBaby, latestFee
                         </div>
                         <div>
                             <h3 className="text-lg font-medium text-dark-text">{t('dashboard.naps')}</h3>
-                            <p className="text-muted-text text-sm">{formatLastActivityTime(latestSleeps[0]?.startTime)}</p>
+                            <p className="text-muted-text text-sm">{formatLastActivityTime(latestSleepEntry?.startTime)}</p>
                         </div>
                     </div>
-                    <span className="text-xl font-bold text-dark-text">{latestSleeps.length > 0 ? (latestSleeps[0].endTime && latestSleeps[0].startTime ? t('dashboard.duration', { duration: Math.floor((latestSleeps[0].endTime.getTime() - latestSleeps[0].startTime.getTime()) / (1000 * 60)) }) : '-') : '0'}</span>
+                    {/* FIX: Use totalSleepCount and format duration of latest entry */}
+                    <span className="text-xl font-bold text-dark-text">
+                        {totalSleepCount} {t('dashboard.napsCountLabel')} ({formatSleepDuration(latestSleepEntry)})
+                    </span>
                 </div>
 
                 {/* Diapers Summary */}
@@ -116,7 +150,7 @@ export default function DashboardContent({ session, lang, primaryBaby, latestFee
                 <div className="space-y-3">
                     <Button asChild fullWidth>
                         <Link href={`/${lang}/activity/feeding`}>
-                            <GiBabyBottle className="mr-2 text-xl text-primary-blue" /> {/* Add icon here for consistency */}
+                            <GiBabyBottle className="mr-2 text-xl text-primary-blue" />
                             {t('activityLogging.addFeeding')}
                         </Link>
                     </Button>
