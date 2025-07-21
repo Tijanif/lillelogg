@@ -41,7 +41,8 @@
     "dailyTip": "Dagens tips",
     "noTipToday": "Ingen tips tilgjengelig i dag. Sjekk igjen i morgen!",
     "upcomingRoutines": "Kommende rutiner",
-    "noRoutines": "Ingen rutiner planlagt for i dag."
+    "noRoutines": "Ingen rutiner planlagt for i dag.",
+    "addNew": "Legg til ny"
   },
   "nav": {
     "dashboard": "Hjem",
@@ -79,11 +80,11 @@
     "diaperConsistencyPELLET": "Hard",
     "diaperConsistencyOTHER": "Annet",
     "type": "Type",
-    "feedingTypeBreastLeft": "Amming (venstre)",
-    "feedingTypeBreastRight": "Amming (høyre)",
-    "feedingTypeBottleFormula": "Flaske (morsmelkerstatning)",
-    "feedingTypeBottlePumpedMilk": "Flaske (pumpet melk)",
-    "feedingTypeSolidFood": "Fast føde",
+    "feedingTypeBREAST_LEFT": "Amming (venstre)",
+    "feedingTypeBREAST_RIGHT": "Amming (høyre)",
+    "feedingTypeBOTTLE_FORMULA": "Flaske (morsmelkerstatning)",
+    "feedingTypeBOTTLE_PUMPED_MILK": "Flaske (pumpet melk)",
+    "feedingTypeSOLID_FOOD": "Fast føde",
     "duration": "Varighet (min)",
     "amount": "Mengde (oz)",
     "startTime": "Starttid",

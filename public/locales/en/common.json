@@ -41,7 +41,8 @@
     "dailyTip": "Daily Tip",
     "noTipToday": "No tip for today. Check back tomorrow!",
     "upcomingRoutines": "Upcoming Routines",
-    "noRoutines": "No routines scheduled for today."
+    "noRoutines": "No routines scheduled for today.",
+    "addNew": "Add New"
   },
   "nav": {
     "dashboard": "Home",
@@ -79,11 +80,11 @@
     "diaperConsistencyPELLET": "Pellet",
     "diaperConsistencyOTHER": "Other",
     "type": "Type",
-    "feedingTypeBreastLeft": "Breast (Left)",
-    "feedingTypeBreastRight": "Breast (Right)",
-    "feedingTypeBottleFormula": "Bottle (Formula)",
-    "feedingTypeBottlePumpedMilk": "Bottle (Pumped Milk)",
-    "feedingTypeSolidFood": "Solid Food",
+    "feedingTypeBREAST_LEFT": "Breast (Left)",
+    "feedingTypeBREAST_RIGHT": "Breast (Right)",
+    "feedingTypeBOTTLE_FORMULA": "Bottle (Formula)",
+    "feedingTypeBOTTLE_PUMPED_MILK": "Bottle (Pumped Milk)",
+    "feedingTypeSOLID_FOOD": "Solid Food",
     "duration": "Duration (min)",
     "amount": "Amount (oz)",
     "startTime": "Start Time",
