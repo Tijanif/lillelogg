@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { logDiaperSchema } from '@/lib/validations';
-import { DiaperType } from '@prisma/client';
+import { DiaperType, DiaperColor, DiaperConsistency } from '@prisma/client';
 import { z } from 'zod';
 
 import { Input } from '@/components/ui/Input';
@@ -40,12 +40,16 @@ export function DiaperForm() {
         defaultValues: {
             startTime: new Date(),
             type: DiaperType.WET,
+            color: undefined,
+            consistency: undefined,
             notes: '',
         },
         mode: 'onBlur',
     });
 
     const watchedStartTime = watch('startTime') as Date;
+    const watchedColor = watch('color') as DiaperColor | undefined;
+    const watchedConsistency = watch('consistency') as DiaperConsistency | undefined;
 
     const handleStartTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue('startTime', new Date(e.target.value), { shouldValidate: true });
@@ -61,6 +65,22 @@ export function DiaperForm() {
         }
     };
 
+    const handleColorChange = (value: string) => {
+        if (Object.values(DiaperColor).includes(value as DiaperColor)) {
+            setValue('color', value as DiaperColor, { shouldValidate: true });
+        } else {
+            setValue('color', undefined, { shouldValidate: true });
+        }
+    };
+
+    const handleConsistencyChange = (value: string) => {
+        if (Object.values(DiaperConsistency).includes(value as DiaperConsistency)) {
+            setValue('consistency', value as DiaperConsistency, { shouldValidate: true });
+        } else {
+            setValue('consistency', undefined, { shouldValidate: true });
+        }
+    };
+
     const onSubmit = async (data: FormData) => {
         setApiError(null);
         try {
@@ -70,6 +90,9 @@ export function DiaperForm() {
                 body: JSON.stringify({
                     ...data,
                     startTime: (data.startTime as Date).toISOString(),
+                    color: data.color ?? null,
+                    consistency: data.consistency ?? null,
+                    notes: data.notes ?? null,
                 }),
             });
 
@@ -95,8 +118,13 @@ export function DiaperForm() {
         }
     };
 
+    const onErrors = (errors: any) => {
+        console.error('--- Form validation errors (onErrors callback) ---', errors);
+        setApiError(t('activityLogging.logError'));
+    };
+
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6"  method="POST">
+        <form onSubmit={handleSubmit(onSubmit, onErrors)} className="space-y-6"  method="POST">
             <div className="flex justify-center mb-6">
                 <div className="w-24 h-24 bg-secondary-gray-accent rounded-full flex items-center justify-center">
                     {/* Diaper icon placeholder */}
@@ -118,6 +146,33 @@ export function DiaperForm() {
                     {t('activityLogging.diaperTypeMixed')}
                 </SegmentedControlItem>
             </SegmentedControl>
+            <h3 className="text-sm font-medium text-dark-text mt-4">{t('activityLogging.diaperColor')}</h3>
+            <SegmentedControl
+                value={watchedColor ?? ''}
+                onValueChange={handleColorChange}
+                type="single"
+            >
+                {Object.values(DiaperColor).map((color) => (
+                    <SegmentedControlItem key={color} value={color}>
+                        {t(`activityLogging.diaperColor${color}`)}
+                    </SegmentedControlItem>
+                ))}
+            </SegmentedControl>
+
+            {/* FIX: Add SegmentedControl for Diaper Consistency */}
+            <h3 className="text-sm font-medium text-dark-text mt-4">{t('activityLogging.diaperConsistency')}</h3>
+            <SegmentedControl
+                value={watchedConsistency ?? ''}
+                onValueChange={handleConsistencyChange}
+                type="single"
+            >
+                {Object.values(DiaperConsistency).map((consistency) => (
+                    <SegmentedControlItem key={consistency} value={consistency}>
+                        {t(`activityLogging.diaperConsistency${consistency}`)}
+                    </SegmentedControlItem>
+                ))}
+            </SegmentedControl>
+
 
             <div className="flex gap-4 items-end">
                 <Input
