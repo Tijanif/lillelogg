@@ -33,9 +33,9 @@ export async function POST(req: NextRequest) {
 
         revalidatePath('/dashboard', 'layout');
 
-        return new NextResponse('Feeding logged successfully', { status: 201 });
+        return new NextResponse('Diaper logged successfully', { status: 201 });
     } catch (error) {
-        console.error('Failed to log feeding:', error);
+        console.error('Failed to log diaper:', error);
         if (error instanceof z.ZodError) {
             return new NextResponse(JSON.stringify(error.issues), { status: 400 });
         }
