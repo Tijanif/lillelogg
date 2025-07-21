@@ -55,6 +55,8 @@ export const apiLogSleepSchema = logSleepSchema.extend({
 export const logDiaperSchema = z.object({
     startTime: z.coerce.date(),
     type: z.nativeEnum(DiaperType),
+    color: z.nativeEnum(DiaperColor).optional(),
+    consistency: z.nativeEnum(DiaperConsistency).optional(),
     notes: z.string().max(500).optional(),
 });
 
