@@ -101,11 +101,14 @@ export function FeedingForm() { //
             setApiError(error.message || t('activityLogging.logError'));
         }
     };
-
+    const onErrors = (errors: any) => {
+        console.error('--- Form validation errors (onErrors callback) ---', errors);
+        setApiError(t('activityLogging.logError'));
+    };
 
     return (
         <form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmit, onErrors)}
             className="space-y-6"
             method="POST"
         >
@@ -115,17 +118,17 @@ export function FeedingForm() { //
                 </div>
             </div>
 
+            <h3 className="text-sm font-medium text-dark-text mt-4">{t('activityLogging.type')}</h3>
             <SegmentedControl
                 value={watch('type')}
                 onValueChange={handleTypeChange}
                 type="single"
             >
-                <SegmentedControlItem value={FeedingType.BREAST_LEFT}>
-                    {t('activityLogging.feedingTypeBreastLeft')}
-                </SegmentedControlItem>
-                <SegmentedControlItem value={FeedingType.BOTTLE_FORMULA}>
-                    {t('activityLogging.feedingTypeBottleFormula')}
-                </SegmentedControlItem>
+                {Object.values(FeedingType).map((typeOption) => (
+                    <SegmentedControlItem key={typeOption} value={typeOption}>
+                        {t(`activityLogging.feedingType${typeOption}`)}
+                    </SegmentedControlItem>
+                ))}
             </SegmentedControl>
 
             <div className="flex gap-4 items-end">
