@@ -64,3 +64,9 @@ export const apiLogDiaperSchema = logDiaperSchema.extend({
     babyId: z.string().cuid(),
     userId: z.string().cuid(),
 });
+
+// --- Analysis Query Validation Schema ---
+export const analyticsQueryParamsSchema = z.object({
+    babyId: z.string().cuid('Invalid baby ID format.'),
+    days: z.coerce.number().int().positive().max(365, 'Days cannot exceed 365.').optional().default(7),
+});
