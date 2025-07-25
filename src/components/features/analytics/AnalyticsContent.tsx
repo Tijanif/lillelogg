@@ -99,7 +99,7 @@ export function AnalyticsContent() {
                         ) : (
                             <>
                                 <p className="text-muted-text text-sm mb-4">
-                                    {t('avgPerDay', { count: Math.round((feedingData?.reduce((sum, d) => sum + d.count, 0) || 0) / (feedingData?.length || 1)) })}
+                                    {t('avgPerDay', { count: (feedingData?.reduce((sum, d) => sum + d.count, 0) || 0) / (feedingData?.length || 1) })}
                                 </p>
                                 <LineChartComponent data={feedingData} dataKey="count" />
                             </>
@@ -114,7 +114,7 @@ export function AnalyticsContent() {
                         ) : (
                             <>
                                 <p className="text-muted-text text-sm mb-4">
-                                    {t('avgSleepDuration', { hours: ((sleepData?.reduce((sum, d) => sum + d.totalMinutes, 0) || 0) / (sleepData?.length || 1) / 60).toFixed(1) })}
+                                    {t('avgSleepDuration', { hours: ((sleepData?.reduce((sum, d) => sum + d.totalMinutes, 0) || 0) / (sleepData?.length || 1) / 60) })}
                                 </p>
                                 <LineChartComponent data={sleepData} dataKey="totalMinutes" />
                             </>
@@ -129,7 +129,7 @@ export function AnalyticsContent() {
                         ) : (
                             <>
                                 <p className="text-muted-text text-sm mb-4">
-                                    {t('avgPerDay', { count: Math.round((diaperData?.reduce((sum, d) => sum + d.count, 0) || 0) / (diaperData?.length || 1)) })}
+                                    {t('avgPerDay', { count: (diaperData?.reduce((sum, d) => sum + d.count, 0) || 0) / (diaperData?.length || 1) })}
                                 </p>
                                 <LineChartComponent data={diaperData} dataKey="count" />
                             </>
