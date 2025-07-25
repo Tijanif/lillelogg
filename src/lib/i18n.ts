@@ -26,6 +26,21 @@ if (typeof window !== 'undefined') {
             },
             interpolation: {
                 escapeValue: false,
+                format: (value, formatName, lng) => {
+                    if (formatName === 'numberWithOneDecimal' && typeof value === 'number') {
+                        return new Intl.NumberFormat(lng, {
+                            minimumFractionDigits: 1,
+                            maximumFractionDigits: 1,
+                        }).format(value);
+                    }
+                    if (formatName === 'numberWithTwoDecimals' && typeof value === 'number') {
+                        return new Intl.NumberFormat(lng, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        }).format(value);
+                    }
+                    return value;
+                },
             },
         });
 }
