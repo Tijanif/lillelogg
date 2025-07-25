@@ -25,7 +25,7 @@ export function BottomNavBar({ navItems, pathname }: BottomNavBarProps) {
         return null;
     };
 
-    const mobileNavItems = navItems.filter(item => ['FaHome', 'FaPencilAlt', 'FaStar', 'FaCog'].includes(item.icon));
+    const mobileNavItems = navItems.filter(item => ['FaHome', 'FaPencilAlt', 'FaStar', 'FaCog', "FaChartLine"].includes(item.icon));
     // We might want to explicitly define a subset of icons for mobile for simplicity.
     // For now, filtering to common ones. We can adjust this list.
 
