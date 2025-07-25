@@ -15,7 +15,7 @@ if (typeof window !== 'undefined') {
             backend: {
                 loadPath: '/locales/{{lng}}/{{ns}}.json',
             },
-            ns: ['common'],
+            ns: ['common', 'analytics'],
             defaultNS: 'common',
             detection: {
                 order: ['path', 'cookie', 'htmlTag'],
