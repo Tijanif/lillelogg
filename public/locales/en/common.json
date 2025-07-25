@@ -139,15 +139,13 @@
       "networkError": "Network error. Please check your internet connection."
     }
   },
-  "common": {
     "loading": "Loading...",
     "dateFormatShort": "MMM dd",
     "hoursUnit": "hrs",
     "countUnit": "times",
     "totalSleep": "Total Sleep",
     "count": "Count",
-    "noDataAvailable": "No data available for this period."
-  },
+    "noDataAvailable": "No data available for this period.",
   "auth": {
     "errors": {
       "default": "An unknown error occurred. Please try again.",
