@@ -62,9 +62,6 @@ export function AnalyticsContent() {
     return (
         <div className="space-y-4">
             <div className="flex justify-center mb-6">
-                {/*
-          Your SegmentedControl takes children for items, so we structure it like this.
-        */}
                 <SegmentedControl
                     type="single"
                     value={days}
