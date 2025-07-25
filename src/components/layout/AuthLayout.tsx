@@ -21,7 +21,7 @@ export default function AuthLayout({ children, lang }: AuthLayoutProps) {
         { href: `/${lang}/log`, label: t('nav.logActivity'), icon: 'FaPencilAlt' },
         { href: `/${lang}/milestones`, label: t('nav.milestones'), icon: 'FaStar' },
         { href: `/${lang}/routines`, label: t('nav.routines'), icon: 'FaCalendarAlt' },
-        { href: `/${lang}/insights`, label: t('nav.insights'), icon: 'FaChartLine' },
+        { href: `/${lang}/analytics`, label: t('nav.analytics'), icon: 'FaChartLine' },
         { href: `/${lang}/settings`, label: t('nav.settings'), icon: 'FaCog' },
     ];
 
