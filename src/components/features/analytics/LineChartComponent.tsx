@@ -26,7 +26,6 @@ interface LineChartComponentProps {
 export function LineChartComponent({ data, dataKey }: LineChartComponentProps) {
     const { t } = useTranslation('common');
 
-    // Handle case where no data is available
     if (!data || data.length === 0) {
         return (
             <div className="flex items-center justify-center h-full text-muted-text py-8 min-h-[150px]">
@@ -35,10 +34,8 @@ export function LineChartComponent({ data, dataKey }: LineChartComponentProps) {
         );
     }
 
-    // Custom Tooltip component to format content according to UI needs and i18n
     const CustomTooltip = ({ active, payload, label }: any) => {
         if (active && payload && payload.length) {
-            // Format the date label (e.g., "Feb 20")
             const formattedDate = format(parseISO(label), t('dateFormatShort'));
 
             let value = payload[0].value;
@@ -66,7 +63,6 @@ export function LineChartComponent({ data, dataKey }: LineChartComponentProps) {
     };
 
     return (
-        // ResponsiveContainer ensures the chart fills its parent element
         <ResponsiveContainer width="100%" height={150}>
             <LineChart
                 data={data}
@@ -77,34 +73,26 @@ export function LineChartComponent({ data, dataKey }: LineChartComponentProps) {
                     bottom: 5,
                 }}
             >
-                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" vertical={false} />
-
-                {/* X-Axis (Date) */}
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" vertical={false} />
                 <XAxis
                     dataKey="date"
                     tickFormatter={(isoDate) => format(parseISO(isoDate), 'MMM dd')}
-                    tick={{ fill: 'var(--muted-text)', fontSize: 12 }}
+                    tick={{ fill: 'var(--color-muted-text)', fontSize: 12 }}
                     axisLine={false}
                     tickLine={false}
                     padding={{ left: 20, right: 20 }}
                 />
-
-                {/* Y-Axis (Value: Count or Duration) */}
                 <YAxis
-                    tick={{ fill: 'var(--muted-text)', fontSize: 12 }}
+                    tick={{ fill: 'var(--color-muted-text)', fontSize: 12 }}
                     axisLine={false}
                     tickLine={false}
                     width={40}
                 />
-
-                {/* Custom Tooltip */}
                 <Tooltip content={<CustomTooltip />} />
-
-                {/* The Line itself */}
                 <Line
                     type="monotone"
                     dataKey={dataKey}
-                    stroke="var(--primary-blue)"
+                    stroke="var(--color-primary-blue)"
                     strokeWidth={2}
                     dot={false}
                     name={dataKey === 'totalMinutes' ? t('totalSleep') : t('count')}

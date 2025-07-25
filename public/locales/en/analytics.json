@@ -1,0 +1,17 @@
+{
+  "analyticsTitle": "Analytics",
+  "last7Days": "Last 7 Days",
+  "last30Days": "Last 30 Days",
+  "feedingsTitle": "Feedings",
+  "sleepTitle": "Sleep",
+  "diapersTitle": "Diapers",
+  "avgPerDay": "Avg {{count}} per day",
+  "avgSleepDuration": "Avg {{hours}} hrs/day",
+  "loadingFeedings": "Loading feeding data",
+  "loadingSleep": "Loading sleep data",
+  "loadingDiapers": "Loading diaper data",
+  "errorLoadingFeedings": "Error loading feeding data.",
+  "errorLoadingSleep": "Error loading sleep data.",
+  "errorLoadingDiapers": "Error loading diaper data.",
+  "pleaseSelectBaby": "Please select a baby to view analytics."
+}

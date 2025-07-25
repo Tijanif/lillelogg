@@ -140,7 +140,13 @@
     }
   },
   "common": {
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "dateFormatShort": "MMM dd",
+    "hoursUnit": "hrs",
+    "countUnit": "times",
+    "totalSleep": "Total Sleep",
+    "count": "Count",
+    "noDataAvailable": "No data available for this period."
   },
   "auth": {
     "errors": {

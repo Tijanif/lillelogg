@@ -140,7 +140,13 @@
     }
   },
   "common": {
-    "loading": "Laster inn..."
+    "loading": "Laster inn...",
+    "dateFormatShort": "MMM dd",
+    "hoursUnit": "timer",
+    "countUnit": "ganger",
+    "totalSleep": "Total Søvn",
+    "count": "Antall",
+    "noDataAvailable": "Ingen data tilgjengelig for denne perioden."
   },
   "auth": {
     "errors": {

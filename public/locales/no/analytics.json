@@ -1,0 +1,17 @@
+{
+  "analyticsTitle": "Analyse",
+  "last7Days": "Siste 7 Dager",
+  "last30Days": "Siste 30 Dager",
+  "feedingsTitle": "Måltider",
+  "sleepTitle": "Søvn",
+  "diapersTitle": "Bleier",
+  "avgPerDay": "Gj.snitt {{count}} per dag",
+  "avgSleepDuration": "Gj.snitt {{hours}} timer/dag",
+  "loadingFeedings": "Laster inn måltidsdata",
+  "loadingSleep": "Laster inn søvndata",
+  "loadingDiapers": "Laster inn bleiedata",
+  "errorLoadingFeedings": "Feil ved lasting av måltidsdata.",
+  "errorLoadingSleep": "Feil ved lasting av søvndata.",
+  "errorLoadingDiapers": "Feil ved lasting av bleiedata.",
+  "pleaseSelectBaby": "Vennligst velg en baby for å se analyse."
+}
