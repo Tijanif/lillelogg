@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { FeedingType, DiaperType, SleepLocation, DiaperColor, DiaperConsistency } from "@prisma/client";
+import { FeedingType, DiaperType, SleepLocation, DiaperColor, DiaperConsistency, MeasurementUnit } from "@prisma/client";
 
 const FeedingTypeEnum = Object.values(FeedingType) as [string, ...string[]];
 // const DiaperTypeEnum = Object.values(DiaperType) as [string, ...string[]];
@@ -70,3 +70,38 @@ export const analyticsQueryParamsSchema = z.object({
     babyId: z.string().cuid('Invalid baby ID format.'),
     days: z.coerce.number().int().positive().max(365, 'Days cannot exceed 365.').optional().default(7),
 });
+
+// --- Growth Entry Measurement Unit Validation Schema ---
+export const createGrowthEntrySchema = z.object({
+    babyId: z.string().cuid('Invalid baby ID format. Must be a valid CUID.'),
+
+
+    date: z.coerce.date().refine((val) => !isNaN(val.getTime()), {
+        message: "Please enter a valid date and time.",
+    }),
+
+    // Weight fields
+    weight: z.coerce.number().optional().refine(val => val === undefined || val > 0, {
+        message: "Weight must be a positive number.",
+    }),
+    weightUnit: z.nativeEnum(MeasurementUnit).optional(),
+
+    // Height fields
+    height: z.coerce.number().optional().refine(val => val === undefined || val > 0, {
+        message: "Height must be a positive number.",
+    }),
+    heightUnit: z.nativeEnum(MeasurementUnit).optional(),
+
+    // Head Circumference fields
+    headCircumference: z.coerce.number().optional().refine(val => val === undefined || val > 0, {
+        message: "Head circumference must be a positive number.",
+    }),
+    headCircUnit: z.nativeEnum(MeasurementUnit).optional(),
+}).refine(data => {
+    return data.weight !== undefined || data.height !== undefined || data.headCircumference !== undefined;
+}, {
+    message: "At least one measurement (weight, height, or head circumference) is required.",
+    path: ['weight']
+});
+
+export type CreateGrowthEntryInput = z.infer<typeof createGrowthEntrySchema>;
