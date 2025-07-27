@@ -71,28 +71,24 @@ export const analyticsQueryParamsSchema = z.object({
     days: z.coerce.number().int().positive().max(365, 'Days cannot exceed 365.').optional().default(7),
 });
 
-// --- Growth Entry Measurement Unit Validation Schema ---
+// --- Growth Entry Validation Schema ---
 export const createGrowthEntrySchema = z.object({
     babyId: z.string().cuid('Invalid baby ID format. Must be a valid CUID.'),
 
-
     date: z.coerce.date().refine((val) => !isNaN(val.getTime()), {
-        message: "Please enter a valid date and time.",
+        message: "Please enter a valid date.",
     }),
 
-    // Weight fields
     weight: z.coerce.number().optional().refine(val => val === undefined || val > 0, {
         message: "Weight must be a positive number.",
     }),
     weightUnit: z.nativeEnum(MeasurementUnit).optional(),
 
-    // Height fields
     height: z.coerce.number().optional().refine(val => val === undefined || val > 0, {
         message: "Height must be a positive number.",
     }),
     heightUnit: z.nativeEnum(MeasurementUnit).optional(),
 
-    // Head Circumference fields
     headCircumference: z.coerce.number().optional().refine(val => val === undefined || val > 0, {
         message: "Head circumference must be a positive number.",
     }),
@@ -104,4 +100,9 @@ export const createGrowthEntrySchema = z.object({
     path: ['weight']
 });
 
-export type CreateGrowthEntryInput = z.infer<typeof createGrowthEntrySchema>;
+// TypeScript type for the raw input values (what useForm initially deals with)
+// This will be `string` for inputs like type="date", type="number"
+export type CreateGrowthFormInput = z.input<typeof createGrowthEntrySchema>;
+
+// TypeScript type for the final, parsed output (what onSubmit receives and API expects)
+export type CreateGrowthEntryOutput = z.infer<typeof createGrowthEntrySchema>;

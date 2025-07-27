@@ -56,6 +56,7 @@
     "addFeeding": "Add Feeding",
     "addSleep": "Add Nap",
     "addDiaper": "Add Diaper",
+    "addGrowth": "Add Growth",
     "feedingTitle": "Log a Feeding",
     "sleepTitle": "Log a Nap",
     "sleepLocation": "Location",
@@ -97,7 +98,22 @@
     "diaperTypeMixed": "Mixed",
     "logSuccess": "Activity logged successfully!",
     "logError": "Failed to log activity. Please try again.",
-    "setToNow": "Now"
+    "setToNow": "Now",
+    "growthTitle": "Log Growth",
+    "growthDateLabel": "Date of Measurement",
+    "weightLabel": "Weight",
+    "weightPlaceholder": "e.g., 5.3",
+    "heightLabel": "Height",
+    "heightPlaceholder": "e.g., 58.5",
+    "headCircLabel": "Head Circumference",
+    "headCircPlaceholder": "e.g., 38.0",
+    "unitLabel": "Unit",
+    "weightUnitKG": "kg",
+    "weightUnitLBS": "lbs",
+    "heightUnitCM": "cm",
+    "heightUnitIN": "in",
+    "headCircUnitCM": "cm",
+    "headCircUnitIN": "in"
   },
   "footer": {
     "privacy": "Privacy",
@@ -146,6 +162,10 @@
     "totalSleep": "Total Sleep",
     "count": "Count",
     "noDataAvailable": "No data available for this period.",
+    "babyIdMissingError": "No baby selected. Please select a baby to log growth.",
+    "networkError": "Network error. Please check your internet connection.",
+    "logSuccess": "Entry logged successfully!",
+    "logError": "Failed to log entry. Please try again.",
   "auth": {
     "errors": {
       "default": "An unknown error occurred. Please try again.",
