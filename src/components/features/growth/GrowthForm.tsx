@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { Card } from '@/components/ui/Card';
+import { useRouter } from 'next/navigation';
 import { createGrowthEntrySchema, CreateGrowthFormInput, CreateGrowthEntryOutput } from '@/lib/validations';
 import { MeasurementUnit } from '@prisma/client';
 
@@ -18,6 +19,7 @@ function getLocalDateString(date = new Date()): string {
 export function GrowthForm() {
     const { t } = useTranslation('activityLogging');
     const { t: tCommon } = useTranslation('common');
+    const router = useRouter();
 
 
     const {
@@ -102,6 +104,10 @@ export function GrowthForm() {
 
             const result = await response.json();
             setFormSuccess(tCommon('logSuccess'));
+
+            router.push('/dashboard');
+            router.refresh();
+
             reset({
                 babyId: babyId,
                 date: getLocalDateString(new Date()),
