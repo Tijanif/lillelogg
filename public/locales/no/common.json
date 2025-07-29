@@ -168,7 +168,6 @@
     "logSuccess": "Oppføring loggført!",
     "logError": "Klarte ikke å logge oppføring. Vennligst prøv igjen.",
     "chartComingSoon": "Graf kommer snart...",
-    "noDataAvailable": "Ingen data tilgjengelig for denne perioden.",
   "auth": {
     "errors": {
       "default": "En ukjent feil oppsto. Vennligst prøv igjen.",
