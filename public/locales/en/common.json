@@ -166,6 +166,8 @@
     "networkError": "Network error. Please check your internet connection.",
     "logSuccess": "Entry logged successfully!",
     "logError": "Failed to log entry. Please try again.",
+    "chartComingSoon": "Chart coming soon...",
+    "noDataAvailable": "No data available for this period.",
   "auth": {
     "errors": {
       "default": "An unknown error occurred. Please try again.",

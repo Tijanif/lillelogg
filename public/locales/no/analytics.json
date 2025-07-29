@@ -13,5 +13,8 @@
   "errorLoadingFeedings": "Feil ved lasting av måltidsdata.",
   "errorLoadingSleep": "Feil ved lasting av søvndata.",
   "errorLoadingDiapers": "Feil ved lasting av bleiedata.",
-  "pleaseSelectBaby": "Vennligst velg en baby for å se analyse."
+  "pleaseSelectBaby": "Vennligst velg en baby for å se analyse.",
+  "growthTitleAnalytics": "Vekst",
+  "loadingGrowth": "Laster inn vekstdata",
+  "errorLoadingGrowth": "Feil ved lasting av vekstdata."
 }

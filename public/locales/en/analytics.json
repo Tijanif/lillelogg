@@ -13,5 +13,8 @@
   "errorLoadingFeedings": "Error loading feeding data.",
   "errorLoadingSleep": "Error loading sleep data.",
   "errorLoadingDiapers": "Error loading diaper data.",
-  "pleaseSelectBaby": "Please select a baby to view analytics."
+  "pleaseSelectBaby": "Please select a baby to view analytics.",
+  "growthTitleAnalytics": "Growth",
+  "loadingGrowth": "Loading growth data",
+  "errorLoadingGrowth": "Error loading growth data."
 }
